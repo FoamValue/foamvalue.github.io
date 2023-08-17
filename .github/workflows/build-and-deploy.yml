@@ -15,6 +15,9 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-      - uses: helaili/jekyll-action@2.0.5    # Choose any one of the Jekyll Actions
-        with:                                # Some relative inputs of your action
-          token: ${{ secrets.JEKYLL_TOKEN }}
+      - uses: helaili/jekyll-action@2.0.5
+        with:
+          target_branch: 'gh-pages'
+        env:
+          JEKYLL_PAT: ${{ secrets.JEKYLL_TOKEN }}
+          JEKYLL_ENV: production
