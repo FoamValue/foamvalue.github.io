@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-last
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3
