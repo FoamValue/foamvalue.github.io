@@ -4,15 +4,44 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+## 关于
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+- 程序猿，男，1991
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+- foamvalue
 
+- Mail：[foamvalue[at]live.cn]
 
-[jekyll-organization]: https://github.com/jekyll
+- GitHub：[https://github.com/FoamValue](https://github.com/FoamValue)
+
+## 关于本站
+
+一个不严谨又很随意的网络日志
+
+- 第一版 2014-06-24
+
+  - Jekyll 静态框架
+
+- 第二版 2017-05-30
+
+  - Jekyll 静态框架
+
+  - [开源主题](https://github.com/OnePieceOrg/Full-Frame-Theme)
+
+- 第三版 2019-04-25
+
+  - React 前端框架
+
+  - 移除大量功能回归简洁
+
+  - 移除留言模块
+
+  - 保留 Mail
+
+- 第三版 2019-06-04
+
+  - 增加 gitalk 留言板
+
+- 第三版 2020-02-07
+
+  - GitHub 安全警告并移除 gitalk 留言板

@@ -1,0 +1,52 @@
+/*!
+ * Coke Jekyll Theme 0.1.0 by Xinjie Chen
+ * Copyright 2023  Xinjie Chen - chenxinjie.cn | @chenxinjie
+ * Licensed under MIT (https://github.com/FoamValue/jekyll-theme-coke/blob/main/LICENSE)
+*/
+
+body {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    color: var(--font-color);
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 4.5rem;
+}
+
+main {
+    article {
+        padding: 40px 20px 30px 20px;
+        border-radius: 10px;
+        background-color: var(--background-color-1);
+        margin-bottom: 1.66rem;
+
+        .post-header {
+            h1 {
+                margin-bottom: 20px;
+            }
+        }
+        .post-author {
+            display: flex;
+            margin-bottom: 10px;
+            .post-author__name {
+                margin-left: 10px;
+            }
+            svg {
+                margin-top: -2px;
+            }
+        }
+        .post-content {
+            line-height: 30px;
+        }
+    }
+}
+
+footer {
+    margin-top: auto!important;
+}
+
+a {
+    text-decoration: none
+}
