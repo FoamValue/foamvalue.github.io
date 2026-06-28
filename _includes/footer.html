@@ -1,0 +1,42 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="{{ '/' | relative_url }}" class="footer-logo">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="#2563eb"/>
+            <path d="M10 10h6v2h-4v4h4v2h-4v6h-2V10zm10 0h2v12h-2V10z" fill="white"/>
+          </svg>
+          <span>{{ site.title | escape }}</span>
+        </a>
+        <p class="footer-description">{{ site.description | escape }}</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-links-group">
+          <h3 class="footer-links-title">导航</h3>
+          <ul class="footer-links-list">
+            <li><a href="{{ '/' | relative_url }}">首页</a></li>
+            <li><a href="{{ '/posts/' | relative_url }}">文章</a></li>
+            <li><a href="{{ '/categories/' | relative_url }}">分类</a></li>
+            <li><a href="{{ '/tags/' | relative_url }}">标签</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links-group">
+          <h3 class="footer-links-title">链接</h3>
+          <ul class="footer-links-list">
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://stackoverflow.com" target="_blank" rel="noopener">Stack Overflow</a></li>
+            <li><a href="https://developer.mozilla.org" target="_blank" rel="noopener">MDN</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p class="copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name | escape }}. 保留所有权利。</p>
+      <p class="powered-by">使用 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 构建</p>
+    </div>
+  </div>
+</footer>

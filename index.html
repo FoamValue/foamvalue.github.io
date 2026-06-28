@@ -1,0 +1,108 @@
+---
+layout: default
+title: 首页
+---
+
+<!-- 英雄区域 -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">探索编程世界</h1>
+    <p class="hero-subtitle">分享技术心得，记录学习历程，探讨最佳实践</p>
+    <div class="hero-actions">
+      <a href="{{ '/posts/' | relative_url }}" class="btn btn-primary">浏览文章</a>
+      <a href="{{ '/about/' | relative_url }}" class="btn btn-secondary">了解更多</a>
+    </div>
+  </div>
+  <div class="hero-decoration">
+    <div class="code-window">
+      <div class="code-window-header">
+        <div class="code-window-dot red"></div>
+        <div class="code-window-dot yellow"></div>
+        <div class="code-window-dot green"></div>
+        <span class="code-window-title">hello_world.py</span>
+      </div>
+      <div class="code-window-body">
+        <pre><code><span class="code-keyword">def</span> <span class="code-function">greet</span>(<span class="code-param">name</span>):
+    <span class="code-keyword">return</span> <span class="code-string">f"Hello, {name}!"</span>
+
+<span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:
+    message = greet(<span class="code-string">"Developer"</span>)
+    <span class="code-function">print</span>(message)</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 最新文章 -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">最新文章</h2>
+    <a href="{{ '/posts/' | relative_url }}" class="section-link">查看全部 →</a>
+  </div>
+  
+  <div class="post-grid">
+    {% for post in site.posts limit:6 %}
+    <article class="post-card">
+      {% if post.cover_image %}
+      <div class="post-card-image">
+        <a href="{{ post.url | relative_url }}">
+          <img src="{{ post.cover_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+        </a>
+      </div>
+      {% endif %}
+      <div class="post-card-content">
+        <div class="post-card-meta">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y年%m月%d日" }}</time>
+          {% if post.categories.first %}
+          <span class="post-card-category">{{ post.categories.first }}</span>
+          {% endif %}
+        </div>
+        <h3 class="post-card-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h3>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+        {% if post.tags.size > 0 %}
+        <div class="post-card-tags">
+          {% for tag in post.tags limit:3 %}
+          <span class="post-card-tag">#{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 分类展示 -->
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">文章分类</h2>
+  </div>
+  
+  <div class="category-grid">
+    {% assign categories = site.categories | sort %}
+    {% for category in categories limit:6 %}
+    <a href="/categories/#{{ category[0] | slugify }}" class="category-card">
+      <div class="category-icon">
+        {% case category[0] %}
+        {% when '前端开发' %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        {% when '后端开发' %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        {% when '算法' %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        {% when 'DevOps' %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        {% when '数据库' %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        {% else %}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        {% endcase %}
+      </div>
+      <h3 class="category-name">{{ category[0] }}</h3>
+      <span class="category-count">{{ category[1].size }} 篇文章</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,43 @@
+---
+layout: page
+title: 文章分类
+subtitle: 按主题浏览所有文章
+permalink: /categories/
+---
+
+<div class="categories-page">
+  {% assign categories = site.categories | sort %}
+  
+  <div class="category-cloud">
+    {% for category in categories %}
+    <a href="#{{ category[0] | slugify }}" class="category-cloud-item" style="--size: {{ category[1].size | times: 0.15 | plus: 0.85 }}">
+      {{ category[0] }}
+      <span class="category-cloud-count">{{ category[1].size }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  
+  <div class="category-sections">
+    {% for category in categories %}
+    <section class="category-section" id="{{ category[0] | slugify }}">
+      <h2 class="category-section-title">
+        {{ category[0] }}
+        <span class="category-section-count">{{ category[1].size }} 篇文章</span>
+      </h2>
+      
+      <div class="category-posts">
+        {% for post in category[1] %}
+        <article class="category-post">
+          <time class="category-post-date" datetime="{{ post.date | date_to_xmlschema }}">
+            {{ post.date | date: "%Y年%m月%d日" }}
+          </time>
+          <h3 class="category-post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          </h3>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</div>

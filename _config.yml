@@ -1,0 +1,84 @@
+# 站点配置
+title: "FoamValue"
+description: "一个专注于程序员技术分享的个人博客"
+author:
+  name: "开发者"
+  email: "FoamValue@live.cn"
+  bio: "热爱编程，分享技术与生活"
+
+# Jekyll 配置
+baseurl: ""
+url: "https://chenxinjie.cn"
+permalink: /posts/:year/:month/:day/:title/
+
+# 构建配置
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: plaintext
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+      line_number_anchors: true
+
+# 插件
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Sass 配置
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# 分页
+paginate: 10
+paginate_path: "/page/:num/"
+
+# 分类和标签
+tag_page_layout: tag_page
+tag_page_dir: tag
+
+category_archive:
+  type: jekyll-archives
+  path: /categories/
+
+tag_archive:
+  type: jekyll-archives
+  path: /tags/
+
+# 默认布局
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+# 集合
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+# 排除文件
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - README.md
+  - Dockerfile

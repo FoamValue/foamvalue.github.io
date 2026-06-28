@@ -1,0 +1,62 @@
+<header class="site-header" role="banner">
+  <div class="header-container">
+    <div class="site-brand">
+      <a href="{{ '/' | relative_url }}" class="site-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#2563eb"/>
+          <path d="M10 10h6v2h-4v4h4v2h-4v6h-2V10zm10 0h2v12h-2V10z" fill="white"/>
+        </svg>
+        <span class="site-title">{{ site.title | escape }}</span>
+      </a>
+    </div>
+    
+    <nav class="site-nav" role="navigation">
+      <button class="nav-toggle" aria-label="切换导航菜单" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} active{% endif %}">首页</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/posts/' | relative_url }}" class="nav-link{% if page.url contains '/posts/' %} active{% endif %}">文章</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/categories/' | relative_url }}" class="nav-link{% if page.url contains '/categories/' %} active{% endif %}">分类</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/tags/' | relative_url }}" class="nav-link{% if page.url contains '/tags/' %} active{% endif %}">标签</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/about/' | relative_url }}" class="nav-link{% if page.url contains '/about/' %} active{% endif %}">关于</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="header-actions">
+      <button class="search-toggle" aria-label="搜索">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- 搜索面板 -->
+  <div class="search-panel" hidden>
+    <div class="search-container">
+      <input type="search" class="search-input" placeholder="搜索文章..." aria-label="搜索文章">
+      <button class="search-close" aria-label="关闭搜索">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="search-results"></div>
+  </div>
+</header>

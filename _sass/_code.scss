@@ -1,0 +1,404 @@
+// ========== 代码高亮样式 ==========
+
+// 行内代码
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+  word-break: break-word;
+}
+
+// 代码块容器
+div.highlighter-rouge,
+figure.highlight {
+  margin: var(--space-xl) 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--code-bg);
+  box-shadow: var(--shadow-md);
+}
+
+// 代码块标题（带语言标识）
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
+  .code-language {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .code-copy {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text-primary);
+    }
+    
+    &.copied {
+      color: var(--color-success);
+    }
+  }
+}
+
+// 代码块内容
+.highlight {
+  pre {
+    margin: 0;
+    padding: var(--space-lg);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    background: var(--code-bg);
+    color: var(--code-text);
+    
+    // 自定义滚动条
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  code {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: inherit;
+    border-radius: 0;
+  }
+  
+  // 行号样式
+  .lineno {
+    display: inline-block;
+    width: 2.5em;
+    text-align: right;
+    color: var(--code-comment);
+    margin-right: var(--space-md);
+    user-select: none;
+    opacity: 0.6;
+  }
+  
+  // 高亮行
+  .hll {
+    background: rgba(255, 255, 255, 0.05);
+    display: block;
+    margin: 0 calc(-1 * var(--space-lg));
+    padding: 0 var(--space-lg);
+  }
+}
+
+// Rouge 语法高亮颜色映射
+.highlight {
+  .c, .cm, .c1, .cp, .cs { color: var(--code-comment); font-style: italic; } // 注释
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: var(--code-keyword); font-weight: 600; } // 关键字
+  .o, .ow { color: var(--code-operator); } // 运算符
+  .s, .sb, .sc, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: var(--code-string); } // 字符串
+  .m, .mf, .mh, .mi, .il, .mo { color: var(--code-number); } // 数字
+  .na, .nb, .nc, .no, .nd, .ni, .ne, .nf, .nl, .nn, .nt, .nv { color: var(--code-function); } // 名称/函数
+  .bp, .vc, .vg, .vi { color: var(--code-variable); } // 变量
+  .gd { color: #f38ba8; background: rgba(243, 139, 168, 0.1); } // 删除
+  .gi { color: #a6e3a1; background: rgba(166, 227, 161, 0.1); } // 插入
+  .gh, .gu { color: #89b4fa; font-weight: 600; } // 标题
+  .ge { font-style: italic; } // 强调
+  .gs { font-weight: 600; } // 粗体
+  .err { color: #f38ba8; background: rgba(243, 139, 168, 0.1); } // 错误
+}
+
+// 代码块语言标签映射
+$languages: (
+  'html': 'HTML',
+  'css': 'CSS',
+  'scss': 'SCSS',
+  'sass': 'Sass',
+  'js': 'JavaScript',
+  'javascript': 'JavaScript',
+  'ts': 'TypeScript',
+  'typescript': 'TypeScript',
+  'jsx': 'JSX',
+  'tsx': 'TSX',
+  'python': 'Python',
+  'py': 'Python',
+  'ruby': 'Ruby',
+  'rb': 'Ruby',
+  'go': 'Go',
+  'rust': 'Rust',
+  'rs': 'Rust',
+  'java': 'Java',
+  'kotlin': 'Kotlin',
+  'swift': 'Swift',
+  'c': 'C',
+  'cpp': 'C++',
+  'cxx': 'C++',
+  'csharp': 'C#',
+  'cs': 'C#',
+  'php': 'PHP',
+  'shell': 'Shell',
+  'bash': 'Bash',
+  'sh': 'Shell',
+  'zsh': 'Zsh',
+  'sql': 'SQL',
+  'yaml': 'YAML',
+  'yml': 'YAML',
+  'json': 'JSON',
+  'xml': 'XML',
+  'markdown': 'Markdown',
+  'md': 'Markdown',
+  'dockerfile': 'Dockerfile',
+  'nginx': 'Nginx',
+  'vim': 'Vim',
+  'lua': 'Lua',
+  'r': 'R',
+  'scala': 'Scala',
+  'dart': 'Dart',
+  'flutter': 'Flutter',
+  'react': 'React',
+  'vue': 'Vue',
+  'angular': 'Angular'
+);
+
+// ========== 代码差异展示 ==========
+.code-diff {
+  .diff-added {
+    background: rgba(34, 197, 94, 0.1);
+    border-left: 3px solid var(--color-success);
+  }
+  
+  .diff-removed {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 3px solid var(--color-error);
+  }
+  
+  .diff-marker {
+    font-weight: 600;
+    
+    &.add { color: var(--color-success); }
+    &.remove { color: var(--color-error); }
+  }
+}
+
+// ========== 终端/命令行样式 ==========
+.terminal {
+  background: #0c0c0c;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-xl) 0;
+  box-shadow: var(--shadow-lg);
+  
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-sm) var(--space-md);
+    background: #1a1a1a;
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      
+      &.red { background: #ff5f56; }
+      &.yellow { background: #ffbd2e; }
+      &.green { background: #27c93f; }
+    }
+    
+    .terminal-title {
+      margin-left: var(--space-sm);
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+  }
+  
+  .terminal-body {
+    padding: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #cccccc;
+    
+    .prompt {
+      color: #22c55e;
+      margin-right: var(--space-sm);
+    }
+    
+    .command {
+      color: #ffffff;
+    }
+    
+    .output {
+      color: #a1a1aa;
+      margin-top: var(--space-xs);
+    }
+  }
+}
+
+// ========== 文件树样式 ==========
+.file-tree {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin: var(--space-xl) 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  
+  .tree-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) 0;
+    
+    &.directory {
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+    
+    &.file {
+      color: var(--color-text-secondary);
+    }
+  }
+  
+  .tree-indent {
+    width: var(--space-lg);
+    flex-shrink: 0;
+  }
+}
+
+// ========== 图片灯箱样式 ==========
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  
+  &.active {
+    opacity: 1;
+  }
+}
+
+.lightbox-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  
+  img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.lightbox-caption {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--space-md);
+  font-size: 0.9375rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+// ========== 响应式图片 ==========
+.responsive-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-figure {
+  margin: var(--space-xl) 0;
+  
+  img {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .image-caption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-md);
+  }
+}
+
+// ========== 响应式代码块 ==========
+@media (max-width: 768px) {
+  .highlight pre {
+    font-size: 0.8125rem;
+    padding: var(--space-md);
+  }
+  
+  .code-window {
+    font-size: 0.75rem;
+  }
+  
+  .lightbox-content {
+    max-width: 95vw;
+  }
+}
