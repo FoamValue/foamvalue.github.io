@@ -33,10 +33,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-paginate
 
-# Sass 配置
-sass:
-  sass_dir: _sass
-  style: compressed
+
 
 # 分页
 paginate: 10
