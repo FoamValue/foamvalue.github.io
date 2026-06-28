@@ -26,11 +26,12 @@ kramdown:
       start_line: 1
       line_number_anchors: true
 
-# 插件
+# GitHub Pages 支持的插件
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-paginate
 
 # Sass 配置
 sass:
@@ -40,18 +41,6 @@ sass:
 # 分页
 paginate: 10
 paginate_path: "/page/:num/"
-
-# 分类和标签
-tag_page_layout: tag_page
-tag_page_dir: tag
-
-category_archive:
-  type: jekyll-archives
-  path: /categories/
-
-tag_archive:
-  type: jekyll-archives
-  path: /tags/
 
 # 默认布局
 defaults:
