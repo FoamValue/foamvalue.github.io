@@ -3,25 +3,13 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-  // 初始化导航
   initNavigation();
-  
-  // 初始化搜索
   initSearch();
-  
-  // 初始化代码复制
   initCodeCopy();
-  
-  // 初始化图片懒加载
   initLazyLoad();
-  
-  // 初始化图片灯箱
   initImageLightbox();
 });
 
-/**
- * 导航菜单切换
- */
 function initNavigation() {
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('.nav-menu');
@@ -33,7 +21,6 @@ function initNavigation() {
       navMenu.classList.toggle('is-open');
     });
     
-    // 点击外部关闭菜单
     document.addEventListener('click', function(e) {
       if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
         navToggle.setAttribute('aria-expanded', 'false');
@@ -43,43 +30,102 @@ function initNavigation() {
   }
 }
 
-/**
- * 搜索功能
- */
 function initSearch() {
   const searchToggle = document.querySelector('.search-toggle');
   const searchPanel = document.querySelector('.search-panel');
   const searchClose = document.querySelector('.search-close');
   const searchInput = document.querySelector('.search-input');
+  const searchResults = document.querySelector('.search-results');
   
-  if (searchToggle && searchPanel) {
-    searchToggle.addEventListener('click', function() {
-      searchPanel.hidden = false;
-      searchInput.focus();
-      document.body.style.overflow = 'hidden';
-    });
+  if (!searchToggle || !searchPanel) return;
+  
+  let searchIndex = [];
+  
+  searchToggle.addEventListener('click', function() {
+    searchPanel.hidden = false;
+    searchInput.focus();
+    document.body.style.overflow = 'hidden';
     
-    searchClose.addEventListener('click', closeSearch);
-    
-    // ESC 关闭搜索
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !searchPanel.hidden) {
-        closeSearch();
-      }
-    });
-    
-    function closeSearch() {
-      searchPanel.hidden = true;
-      document.body.style.overflow = '';
+    if (searchIndex.length === 0) {
+      loadSearchIndex();
     }
+  });
+  
+  searchClose.addEventListener('click', closeSearch);
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !searchPanel.hidden) {
+      closeSearch();
+    }
+  });
+  
+  searchInput.addEventListener('input', function(e) {
+    const query = e.target.value.trim();
+    performSearch(query);
+  });
+  
+  function loadSearchIndex() {
+    fetch('/search.json')
+      .then(function(response) {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(function(data) {
+        searchIndex = data;
+      })
+      .catch(function(error) {
+        console.error('加载搜索索引失败:', error);
+      });
+  }
+  
+  function performSearch(query) {
+    searchResults.innerHTML = '';
+    
+    if (!query || searchIndex.length === 0) {
+      if (!query) {
+        searchResults.innerHTML = '<p class="search-empty">请输入关键词搜索文章</p>';
+      }
+      return;
+    }
+    
+    const results = searchIndex.filter(function(post) {
+      const searchText = (post.title + ' ' + post.description + ' ' + post.tags + ' ' + post.content).toLowerCase();
+      return searchText.includes(query.toLowerCase());
+    });
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = '<p class="search-empty">未找到相关文章</p>';
+      return;
+    }
+    
+    const resultsList = document.createElement('ul');
+    resultsList.className = 'search-results-list';
+    
+    results.slice(0, 10).forEach(function(post) {
+      const li = document.createElement('li');
+      li.className = 'search-result-item';
+      li.innerHTML = `
+        <a href="${post.url}" class="search-result-link">
+          <h3 class="search-result-title">${post.title}</h3>
+          <p class="search-result-date">${post.date}</p>
+          ${post.description ? `<p class="search-result-desc">${post.description}</p>` : ''}
+        </a>
+      `;
+      resultsList.appendChild(li);
+    });
+    
+    searchResults.appendChild(resultsList);
+  }
+  
+  function closeSearch() {
+    searchPanel.hidden = true;
+    document.body.style.overflow = '';
+    searchInput.value = '';
+    searchResults.innerHTML = '';
   }
 }
 
-/**
- * 代码复制功能
- */
 function initCodeCopy() {
-  // 为代码块添加复制按钮
   const codeBlocks = document.querySelectorAll('div.highlighter-rouge');
   
   codeBlocks.forEach(function(block) {
@@ -89,7 +135,6 @@ function initCodeCopy() {
     const header = document.createElement('div');
     header.className = 'code-header';
     
-    // 获取语言
     const classes = block.className.split(' ');
     let language = '';
     classes.forEach(function(cls) {
@@ -131,9 +176,6 @@ function initCodeCopy() {
   });
 }
 
-/**
- * 图片懒加载
- */
 function initLazyLoad() {
   const images = document.querySelectorAll('img[loading="lazy"]');
   
@@ -154,9 +196,6 @@ function initLazyLoad() {
   }
 }
 
-/**
- * 图片灯箱
- */
 function initImageLightbox() {
   const contentImages = document.querySelectorAll('.post-content img, .page-content img');
   
@@ -187,12 +226,10 @@ function initImageLightbox() {
     document.body.appendChild(lightbox);
     document.body.style.overflow = 'hidden';
     
-    // 动画
     requestAnimationFrame(function() {
       lightbox.classList.add('active');
     });
     
-    // 关闭事件
     lightbox.addEventListener('click', function(e) {
       if (e.target === lightbox || e.target.classList.contains('lightbox-overlay')) {
         closeLightbox(lightbox);
@@ -203,7 +240,6 @@ function initImageLightbox() {
       closeLightbox(lightbox);
     });
     
-    // ESC 关闭
     const closeHandler = function(e) {
       if (e.key === 'Escape') {
         closeLightbox(lightbox);
@@ -222,9 +258,6 @@ function initImageLightbox() {
   }
 }
 
-/**
- * 平滑滚动到锚点
- */
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   anchor.addEventListener('click', function(e) {
     const target = document.querySelector(this.getAttribute('href'));
