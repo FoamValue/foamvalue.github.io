@@ -32,10 +32,10 @@ author: 陈鑫杰
 ## 网站现状
 
 移动端：
-![](page-optimization/pagespeed-desktop.png)
+![](/assets/images/posts/page-optimization/pagespeed-desktop.png)
 
 电脑端：
-![](page-optimization/pagespeed-mobile.png)
+![](/assets/images/posts/page-optimization/pagespeed-mobile.png)
 
 从上图来看，本人还是相当走心了。
 基本来讲，网站几乎不需要去优化了，毕竟评分已经很合格，甚至都是良好了。（虽然一直以来都是这样的借口。。。）
@@ -88,7 +88,7 @@ gzip_disable "MSIE [1-6]\.";
 
 ```
 
-![](page-optimization/use-gzip.png)
+![](/assets/images/posts/page-optimization/use-gzip.png)
 
 开启后，可以看出 gzip 启用后，例如 bootstrap.min.css 文件被压缩到 24KB，浏览器再解压到 147 KB。
 
@@ -129,7 +129,7 @@ server {
   ...
 ```
 
-![](page-optimization/use-cache.png)
+![](/assets/images/posts/page-optimization/use-cache.png)
 
 -------
 

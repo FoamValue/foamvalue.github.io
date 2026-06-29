@@ -4,7 +4,7 @@ title: 浅谈：阿里私有云实践
 author: 陈鑫杰
 ---
 
-![](aliyun-private-cloud/cloud.jpg)
+![](/assets/images/posts/aliyun-private-cloud/cloud.jpg)
 
 从云的诞生，发展到现在。已经有越来越多的应用依赖云，越来越多的用户依赖云。
 廉价的硬件设备，超大规模的虚拟化、分布式架构，以及动态伸缩。这些优点，决定了越来越多的个人、企业选择云，搭建各种应用与服务。

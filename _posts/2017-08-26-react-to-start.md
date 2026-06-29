@@ -21,7 +21,7 @@ author: 陈鑫杰
 
 [github 地址](https://github.com/OnePieceOrg/Chopper)
 
-![](react-to-start/demo.jpeg)
+![](/assets/images/posts/react-to-start/demo.jpeg)
 
 ### 「粗鲁」的由来
 

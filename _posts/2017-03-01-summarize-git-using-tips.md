@@ -24,7 +24,7 @@ author: 陈鑫杰
 
 **然而**，GIT 只是一个版本控制系统。虽然 GIT 在设计上很适合多分支管理，但是举个栗子 - **混乱的分支图**。
 
-![git-tips](summarize-git-using-tips/20160422193143_281.jpg)
+![git-tips](/assets/images/posts/summarize-git-using-tips/20160422193143_281.jpg)
 
 遇到了，不知道是悲愤多些，还是吐血多些。
 
@@ -46,33 +46,33 @@ author: 陈鑫杰
 
 **有序的分支图**
 
-![](summarize-git-using-tips/14724616710606.jpg)
+![](/assets/images/posts/summarize-git-using-tips/14724616710606.jpg)
 
 ### Master/Develop 分支
 
 初始化主分支
 ***不允许提交代码，只允许衍生分支&合并代码。***
 
-![git-tips](summarize-git-using-tips/20151229093807_669.png)
+![git-tips](/assets/images/posts/summarize-git-using-tips/20151229093807_669.png)
 
 ### Feature 分支
 
 Develop 衍生的功能分支，不同的功能创建不同的分支。
 完成功能开发后，合并到 Develop 分支。
 
-![git-tips](summarize-git-using-tips/20151229093807_775.png)
+![git-tips](/assets/images/posts/summarize-git-using-tips/20151229093807_775.png)
 
 ### Release分支
 
 Develop 衍生的测试上线分支，**需要记录 Tag**。
 
-![git-tips](summarize-git-using-tips/20151229093807_423.png)
+![git-tips](/assets/images/posts/summarize-git-using-tips/20151229093807_423.png)
 
 ### Hotfix 分支
 
 Master 衍生的修复线上 BUG 的分支。
 
-![git-tips](summarize-git-using-tips/20151229093807_963.png)
+![git-tips](/assets/images/posts/summarize-git-using-tips/20151229093807_963.png)
 
 ------
 

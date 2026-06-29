@@ -64,7 +64,7 @@ Lucky Chance!
 
 1 个 RTT，除去 TCP/IP 头信息之外，最多只能传输 14 KB 数据。
 
-![](front-performance/RTT.png)
+![](/assets/images/posts/front-performance/RTT.png)
 
 不同网络下，RTT 耗时的参考值。
 

@@ -11,7 +11,7 @@ author: 陈鑫杰
 
 在**有序数组**中查找某一特定元素的搜索算法。
 
-![binarySearch](algorithm-study/Binary_search_into_array.png)
+![binarySearch](/assets/images/posts/algorithm-study/Binary_search_into_array.png)
 
 搜索过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜索过程结束；
 

@@ -25,7 +25,7 @@ author: 陈鑫杰
 
 **算法**
 
-![Sorting_quicksort_anim](algorithm-study/Sorting_quicksort_anim.gif)
+![Sorting_quicksort_anim](/assets/images/posts/algorithm-study/Sorting_quicksort_anim.gif)
 
 快速排序使用分治法（Divide and conquer）策略来把一个序列（list）分为两个子序列（sub-lists）。
 
@@ -93,7 +93,7 @@ class quick_sort {
 
 ### 归并排序
 
-![Merge_sort_animation](algorithm-study/Merge_sort_animation.gif)
+![Merge_sort_animation](/assets/images/posts/algorithm-study/Merge_sort_animation.gif)
 
 归并操作（merge），也叫归并算法，指的是将两个已经排序的序列合并成一个序列的操作。归并排序算法依赖归并操作。
 

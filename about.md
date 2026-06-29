@@ -29,7 +29,7 @@ permalink: /about/
 
 ### 联系方式
 
-- **GitHub**: [github.com/yourusername](https://github.com/yourusername)
-- **邮箱**: [dev@example.com](mailto:dev@example.com)
+- **GitHub**: [github.com/FoamValue](https://github.com/FoamValue)
+- **邮箱**: [foamvalue@live.cn](mailto:foamvalue@live.cn)
 
 欢迎通过评论或邮件与我交流技术问题！

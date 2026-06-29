@@ -39,7 +39,7 @@ HMACSHA256(
 
 ------
 ## 流程
-![](json-web-token/jwt.png)
+![](/assets/images/posts/json-web-token/jwt.png)
 
 1. 浏览器向服务端发起登录的 POST 请求。
 2. 服务端校验用户名跟密码后，生成 JWT。
