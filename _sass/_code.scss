@@ -139,6 +139,58 @@ figure.highlight {
 }
 
 // 代码块语言标签映射
+$language-colors: (
+  'javascript': #f7df1e,
+  'js': #f7df1e,
+  'jsx': #f7df1e,
+  'tsx': #f7df1e,
+  'typescript': #3178c6,
+  'ts': #3178c6,
+  'java': #ed8b00,
+  'python': #3776ab,
+  'py': #3776ab,
+  'go': #00add8,
+  'golang': #00add8,
+  'rust': #dea584,
+  'rs': #dea584,
+  'cpp': #00599c,
+  'cxx': #00599c,
+  'c': #00599c,
+  'csharp': #512bd4,
+  'cs': #512bd4,
+  'php': #777bb4,
+  'ruby': #cc342d,
+  'rb': #cc342d,
+  'html': #e34f26,
+  'css': #1572b6,
+  'scss': #1572b6,
+  'sass': #1572b6,
+  'sql': #e38c00,
+  'json': #000000,
+  'xml': #006699,
+  'yaml': #cb171e,
+  'yml': #cb171e,
+  'bash': #4eaa25,
+  'shell': #4eaa25,
+  'sh': #4eaa25,
+  'zsh': #4eaa25,
+  'dockerfile': #2496ed,
+  'nginx': #009639,
+  'vue': #42b883,
+  'react': #61dafb,
+  'angular': #dd0031,
+  'kotlin': #7f52ff,
+  'swift': #fa7343,
+  'dart': #0175c2,
+  'flutter': #02569b,
+  'scala': #c22d40,
+  'r': #198ce7,
+  'lua': #000080,
+  'markdown': #083fa1,
+  'md': #083fa1,
+  'vim': #019833
+);
+
 $languages: (
   'html': 'HTML',
   'css': 'CSS',
@@ -189,6 +241,12 @@ $languages: (
   'vue': 'Vue',
   'angular': 'Angular'
 );
+
+@each $lang, $color in $language-colors {
+  .code-language[data-lang="#{$lang}"] {
+    color: $color;
+  }
+}
 
 // ========== 代码差异展示 ==========
 .code-diff {

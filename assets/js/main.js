@@ -125,6 +125,224 @@ function initSearch() {
   }
 }
 
+function detectLanguage(code) {
+  const patterns = {
+    javascript: [
+      /\bfunction\s+\w+\s*\(/,
+      /\bconst\s+\w+\s*=/,
+      /\blet\s+\w+\s*=/,
+      /\bvar\s+\w+\s*=/,
+      /console\.(log|error|info)/,
+      /document\.(getElementById|querySelector)/,
+      /\bimport\s+.*from\s+['"]/,
+      /\bexport\s+(default|function)/,
+      /=>\s*\{/,
+      /class\s+\w+\s+extends\s+React\.Component/,
+      /ReactDOM\.render/
+    ],
+    java: [
+      /\bpublic\s+(class|static|void|int|String)/,
+      /System\.out\.println/,
+      /import\s+java\./,
+      /\bprivate\s+\w+/,
+      /\bprotected\s+\w+/,
+      /\bpackage\s+\w+/,
+      /\bimplements\s+\w+/,
+      /\bextends\s+\w+/,
+      /new\s+ArrayList</,
+      /@Override/
+    ],
+    python: [
+      /def\s+\w+\s*\(/,
+      /\bimport\s+\w+/,
+      /\bfrom\s+\w+\s+import/,
+      /print\s*\(/,
+      /\bif\s+.+:\s*$/,
+      /\bfor\s+\w+\s+in\s+/,
+      /\bwhile\s+.+:\s*$/,
+      /:\s*\n\s*indent/,
+      /\bself\./,
+      /\bTrue\b|\bFalse\b/,
+      /\bNone\b/
+    ],
+    bash: [
+      /^\s*#!/,
+      /^\s*export\s+\w+/,
+      /^\s*cd\s+/,
+      /^\s*echo\s+/,
+      /^\s*if\s+\[/,
+      /^\s*for\s+\w+\s+in/,
+      /\$\{?\w+\}?/,
+      /^\s*git\s+/,
+      /^\s*npm\s+/,
+      /^\s*docker\s+/
+    ],
+    sql: [
+      /\bSELECT\b/i,
+      /\bFROM\b/i,
+      /\bWHERE\b/i,
+      /\bINSERT\b/i,
+      /\bUPDATE\b/i,
+      /\bDELETE\b/i,
+      /\bCREATE\b/i,
+      /\bDROP\b/i,
+      /\bALTER\b/i,
+      /\bJOIN\b/i,
+      /\bON\b/i,
+      /\bAND\b/i,
+      /\bOR\b/i
+    ],
+    html: [
+      /<html/,
+      /<head/,
+      /<body/,
+      /<div/,
+      /<span/,
+      /<p/,
+      /<a\s+href/,
+      /<script/,
+      /<style/,
+      /<!DOCTYPE/
+    ],
+    css: [
+      /^\s*\.\w+\s*\{/,
+      /^\s*#\w+\s*\{/,
+      /^\s*\w+\s*\{/,
+      /:\s*[\w-]+;/,
+      /background(-color)?:/,
+      /color:/,
+      /font(-size)?:/,
+      /margin:/,
+      /padding:/,
+      /@import\s+/,
+      /@media\s+/
+    ],
+    xml: [
+      /<\?xml/,
+      /<[^>]+\/>/,
+      /<\/\w+>/,
+      /xmlns=/,
+      /<bean\s+/,
+      /<property\s+/,
+      /<context:/,
+      /<mvc:/,
+      /<tx:/
+    ],
+    json: [
+      /^\s*\{/,
+      /"[\w-]+"\s*:/,
+      /:\s*"[^"]*"/,
+      /:\s*\d+/,
+      /:\s*(true|false|null)/,
+      /\[\s*\{/
+    ],
+    yaml: [
+      /^\s*[\w-]+:/,
+      /^\s*- \w+/,
+      /^\s*\w+:\s*\|/,
+      /^\s*\w+:\s*>/,
+      /^\s*-\s*\{/,
+      /^\s*---/
+    ],
+    go: [
+      /\bfunc\s+\w+\s*\(/,
+      /\bpackage\s+\w+/,
+      /\bimport\s+\(/,
+      /fmt\.(Print|Println)/,
+      /\bvar\s+\w+\s+\w+/,
+      /\btype\s+\w+\s+struct/,
+      /\bgo\s+\w+/,
+      /\bchan\s+\w+/,
+      /\binterface\s+\{/
+    ],
+    ruby: [
+      /def\s+\w+\s*\(/,
+      /\bclass\s+\w+/,
+      /\bmodule\s+\w+/,
+      /puts\s+/,
+      /\$[\w]+/,
+      /@[\w]+/,
+      /\battr_accessor\s+/,
+      /\binclude\s+\w+/,
+      /\brequire\s+['"]/
+    ],
+    csharp: [
+      /\busing\s+\w+/,
+      /\bpublic\s+class/,
+      /\bprivate\s+\w+/,
+      /\bprotected\s+\w+/,
+      /\bstatic\s+\w+/,
+      /\bvoid\s+\w+/,
+      /\bstring\s+\w+/,
+      /\bint\s+\w+/,
+      /Console\.Write/,
+      /\bnamespace\s+/,
+      /\.NET/
+    ],
+    php: [
+      /<\?php/,
+      /\$[\w]+/,
+      /\bfunction\s+\w+/,
+      /echo\s+/,
+      /\bclass\s+\w+/,
+      /\bpublic\s+\w+/,
+      /\bprivate\s+\w+/,
+      /require_once\s+/,
+      /include_once\s+/,
+      /\b$_GET\b|\b$_POST\b/
+    ],
+    rust: [
+      /\bfn\s+\w+/,
+      /\blet\s+\w+/,
+      /\bmut\s+\w+/,
+      /\bstruct\s+\w+/,
+      /\benum\s+\w+/,
+      /\bimpl\s+\w+/,
+      /println!\(/,
+      /\buse\s+\w+/,
+      /\bcrate\s+/
+    ],
+    typescript: [
+      /\bfunction\s+\w+\s*\(/,
+      /\bconst\s+\w+\s*:\s*\w+/,
+      /\blet\s+\w+\s*:\s*\w+/,
+      /\binterface\s+\w+/,
+      /\btype\s+\w+\s*=/,
+      /\bclass\s+\w+\s+implements/,
+      /\bextends\s+\w+/,
+      /\bimport\s+.*from\s+['"]/,
+      /\bexport\s+(default|function)/,
+      /:\s*(string|number|boolean|any)/
+    ],
+    jsx: [
+      /<\w+\s*\{/,
+      /\{[\w]+\}/,
+      /className=/,
+      /React\.createElement/,
+      /\bprops\.(\w+)/,
+      /\bstate\s*=\s*\{/
+    ]
+  };
+  
+  let detectedLang = '';
+  let maxScore = 0;
+  
+  for (const [lang, regexes] of Object.entries(patterns)) {
+    let score = 0;
+    regexes.forEach(function(regex) {
+      if (regex.test(code)) {
+        score++;
+      }
+    });
+    if (score > maxScore) {
+      maxScore = score;
+      detectedLang = lang;
+    }
+  }
+  
+  return detectedLang;
+}
+
 function initCodeCopy() {
   const codeBlocks = document.querySelectorAll('div.highlighter-rouge');
   
@@ -146,9 +364,66 @@ function initCodeCopy() {
       }
     });
     
+    if (!language) {
+      const code = pre.querySelector('code') || pre;
+      language = detectLanguage(code.textContent);
+    }
+    
+    const languageMap = {
+      'javascript': 'JavaScript',
+      'js': 'JavaScript',
+      'typescript': 'TypeScript',
+      'ts': 'TypeScript',
+      'jsx': 'JSX',
+      'tsx': 'TSX',
+      'java': 'Java',
+      'python': 'Python',
+      'py': 'Python',
+      'bash': 'Bash',
+      'shell': 'Shell',
+      'sh': 'Shell',
+      'sql': 'SQL',
+      'html': 'HTML',
+      'css': 'CSS',
+      'scss': 'SCSS',
+      'sass': 'Sass',
+      'xml': 'XML',
+      'json': 'JSON',
+      'yaml': 'YAML',
+      'yml': 'YAML',
+      'go': 'Go',
+      'golang': 'Go',
+      'ruby': 'Ruby',
+      'rb': 'Ruby',
+      'csharp': 'C#',
+      'cs': 'C#',
+      'cpp': 'C++',
+      'c': 'C',
+      'php': 'PHP',
+      'rust': 'Rust',
+      'rs': 'Rust',
+      'kotlin': 'Kotlin',
+      'swift': 'Swift',
+      'dart': 'Dart',
+      'flutter': 'Flutter',
+      'vue': 'Vue',
+      'angular': 'Angular',
+      'dockerfile': 'Dockerfile',
+      'nginx': 'Nginx',
+      'markdown': 'Markdown',
+      'md': 'Markdown',
+      'vim': 'Vim',
+      'lua': 'Lua',
+      'r': 'R',
+      'scala': 'Scala'
+    };
+    
+    const displayLanguage = languageMap[language] || (language.charAt(0).toUpperCase() + language.slice(1)) || 'Code';
+    
     const languageLabel = document.createElement('span');
     languageLabel.className = 'code-language';
-    languageLabel.textContent = language || 'Code';
+    languageLabel.setAttribute('data-lang', language);
+    languageLabel.textContent = displayLanguage;
     
     const copyButton = document.createElement('button');
     copyButton.className = 'code-copy';
