@@ -1,0 +1,22 @@
+---
+layout: default
+title: "404 - 页面未找到"
+permalink: /404.html
+---
+
+<div class="error-404">
+  <div class="error-404-icon">
+    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M15 9l-6 6"/>
+      <path d="M9 9l6 6"/>
+    </svg>
+  </div>
+  <h1 class="error-404-title">404</h1>
+  <p class="error-404-subtitle">页面未找到</p>
+  <p class="error-404-desc">抱歉，您访问的页面不存在或已被移除。</p>
+  <div class="error-404-actions">
+    <a href="{{ '/' | relative_url }}" class="btn btn-primary">返回首页</a>
+    <a href="{{ '/posts/' | relative_url }}" class="btn btn-secondary">浏览文章</a>
+  </div>
+</div>

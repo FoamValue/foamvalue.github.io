@@ -129,7 +129,10 @@ function initCodeCopy() {
   const codeBlocks = document.querySelectorAll('div.highlighter-rouge');
   
   codeBlocks.forEach(function(block) {
-    const pre = block.querySelector('pre');
+    const highlightDiv = block.querySelector('div.highlight');
+    if (!highlightDiv) return;
+    
+    const pre = highlightDiv.querySelector('pre');
     if (!pre) return;
     
     const header = document.createElement('div');
@@ -172,7 +175,7 @@ function initCodeCopy() {
     
     header.appendChild(languageLabel);
     header.appendChild(copyButton);
-    block.insertBefore(header, pre);
+    highlightDiv.insertBefore(header, pre);
   });
 }
 
