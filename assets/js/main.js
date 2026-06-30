@@ -30,6 +30,10 @@ function initNavigation() {
   }
 }
 
+/**
+ * 初始化搜索功能
+ * 绑定搜索面板的打开/关闭事件，加载搜索索引，执行关键词匹配并展示结果
+ */
 function initSearch() {
   const searchToggle = document.querySelector('.search-toggle');
   const searchPanel = document.querySelector('.search-panel');
@@ -125,6 +129,13 @@ function initSearch() {
   }
 }
 
+/**
+ * 根据代码内容自动检测编程语言
+ * @param {string} code - 待检测的代码文本
+ * @returns {string} 检测到的编程语言名称（如 'javascript', 'python' 等），若无法检测则返回空字符串
+ * @description 通过匹配不同编程语言的语法特征正则表达式来识别代码类型
+ *              每个语言包含多个特征正则表达式，匹配数量最多的语言将被返回
+ */
 function detectLanguage(code) {
   const patterns = {
     javascript: [
@@ -343,6 +354,10 @@ function detectLanguage(code) {
   return detectedLang;
 }
 
+/**
+ * 初始化代码块复制功能
+ * 为所有代码块添加语言标签和复制按钮，支持自动语言检测和一键复制
+ */
 function initCodeCopy() {
   const codeBlocks = document.querySelectorAll('div.highlighter-rouge');
   
@@ -474,6 +489,10 @@ function initLazyLoad() {
   }
 }
 
+/**
+ * 初始化图片灯箱功能
+ * 为文章内容和页面内容中的图片添加点击放大效果，支持ESC键关闭和点击遮罩层关闭
+ */
 function initImageLightbox() {
   const contentImages = document.querySelectorAll('.post-content img, .page-content img');
   

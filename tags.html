@@ -6,38 +6,43 @@ permalink: /tags/
 ---
 
 <div class="tags-page">
-  {% assign tags = site.tags | sort %}
-  
-  <div class="tag-cloud">
-    {% for tag in tags %}
-    <a href="#{{ tag[0] | slugify }}" class="tag-cloud-item" style="--size: {{ tag[1].size | times: 0.12 | plus: 0.88 }}">
-      #{{ tag[0] }}
-      <span class="tag-cloud-count">{{ tag[1].size }}</span>
-    </a>
-    {% endfor %}
-  </div>
-  
-  <div class="tag-sections">
-    {% for tag in tags %}
-    <section class="tag-section" id="{{ tag[0] | slugify }}">
-      <h2 class="tag-section-title">
-        #{{ tag[0] }}
-        <span class="tag-section-count">{{ tag[1].size }} 篇文章</span>
-      </h2>
+  <div class="tags-container">
+    <div class="tags-main">
+      {% assign tags = site.tags | sort %}
       
-      <div class="tag-posts">
-        {% for post in tag[1] %}
-        <article class="tag-post">
-          <time class="tag-post-date" datetime="{{ post.date | date_to_xmlschema }}">
-            {{ post.date | date: "%Y年%m月%d日" }}
-          </time>
-          <h3 class="tag-post-title">
-            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-          </h3>
-        </article>
+      {% for tag in tags %}
+      <section class="tag-section" id="{{ tag[0] | slugify }}">
+        <h2 class="tag-section-title">
+          #{{ tag[0] }}
+          <span class="tag-section-count">{{ tag[1].size }} 篇文章</span>
+        </h2>
+        
+        <div class="tag-posts">
+          {% for post in tag[1] %}
+          <article class="tag-post">
+            <time class="tag-post-date" datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%Y年%m月%d日" }}
+            </time>
+            <h3 class="tag-post-title">
+              <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+            </h3>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+    
+    <aside class="tags-sidebar">
+      <div class="tag-cloud">
+        {% assign sorted_tags = site.tags | sort %}
+        {% for tag in sorted_tags %}
+        <a href="#{{ tag[0] | slugify }}" class="tag-cloud-item">
+          #{{ tag[0] }}
+          <span class="tag-cloud-count">{{ tag[1].size }}</span>
+        </a>
         {% endfor %}
       </div>
-    </section>
-    {% endfor %}
+    </aside>
   </div>
 </div>
