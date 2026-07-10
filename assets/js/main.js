@@ -439,32 +439,8 @@ function initCodeCopy() {
     languageLabel.className = 'code-language';
     languageLabel.setAttribute('data-lang', language);
     languageLabel.textContent = displayLanguage;
-    
-    const copyButton = document.createElement('button');
-    copyButton.className = 'code-copy';
-    copyButton.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-      </svg>
-      <span>复制</span>
-    `;
-    
-    copyButton.addEventListener('click', function() {
-      const code = pre.querySelector('code') || pre;
-      navigator.clipboard.writeText(code.textContent).then(function() {
-        copyButton.classList.add('copied');
-        copyButton.querySelector('span').textContent = '已复制';
-        
-        setTimeout(function() {
-          copyButton.classList.remove('copied');
-          copyButton.querySelector('span').textContent = '复制';
-        }, 2000);
-      });
-    });
-    
+
     header.appendChild(languageLabel);
-    header.appendChild(copyButton);
     highlightDiv.insertBefore(header, pre);
   });
 }

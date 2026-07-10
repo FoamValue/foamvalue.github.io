@@ -2,15 +2,15 @@
 layout: default
 ---
 
-<article class="page">
-  <header class="page-header">
-    <h1 class="page-title">{{ page.title | escape }}</h1>
+<article class="page-article">
+  <header class="page-article-header">
+    <h1 class="page-article-title">{{ page.title | escape }}</h1>
     {% if page.subtitle %}
-    <p class="page-subtitle">{{ page.subtitle | escape }}</p>
+    <p class="page-article-subtitle">{{ page.subtitle | escape }}</p>
     {% endif %}
   </header>
 
-  <div class="page-content">
+  <div class="page-article-content">
     {{ content }}
   </div>
 </article>

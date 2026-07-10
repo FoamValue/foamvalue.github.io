@@ -2,7 +2,7 @@
 title: "FoamValue"
 description: "一个专注于程序员技术分享的个人博客"
 author:
-  name: "开发者"
+  name: "陈鑫杰"
   email: "FoamValue@live.cn"
   bio: "热爱编程，分享技术与生活"
 
@@ -47,6 +47,7 @@ defaults:
     values:
       layout: "post"
       comments: true
+      author: "陈鑫杰"
   - scope:
       path: ""
       type: "pages"

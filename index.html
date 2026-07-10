@@ -3,68 +3,60 @@ layout: default
 title: 首页
 ---
 
-<!-- 英雄区域 -->
-<section class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">探索编程世界</h1>
-    <p class="hero-subtitle">分享技术心得，记录学习历程，探讨最佳实践</p>
-    <div class="hero-actions">
-      <a href="{{ '/posts/' | relative_url }}" class="btn btn-primary">浏览文章</a>
-      <a href="{{ '/about/' | relative_url }}" class="btn btn-secondary">了解更多</a>
+<!-- Hero: 代码窗口 + 数据 -->
+<section class="home-hero">
+  <div class="home-hero-inner">
+    <div class="home-hero-text">
+      <h1 class="home-hero-title"> FoamValue</h1>
+      <p class="home-hero-desc">一个专注于程序员技术分享的个人博客</p>
     </div>
-  </div>
-  <div class="hero-decoration">
-    <div class="code-window">
-      <div class="code-window-header">
-        <div class="code-window-dot red"></div>
-        <div class="code-window-dot yellow"></div>
-        <div class="code-window-dot green"></div>
-        <span class="code-window-title">hello_world.py</span>
-      </div>
-      <div class="code-window-body">
-        <pre><code><span class="code-keyword">def</span> <span class="code-function">greet</span>(<span class="code-param">name</span>):
-    <span class="code-keyword">return</span> <span class="code-string">f"Hello, {name}!"</span>
-
-<span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:
-    message = greet(<span class="code-string">"Developer"</span>)
-    <span class="code-function">print</span>(message)</code></pre>
+    <div class="home-hero-code">
+      <div class="code-window">
+        <div class="code-window-header">
+          <div class="code-window-dot red"></div>
+          <div class="code-window-dot yellow"></div>
+          <div class="code-window-dot green"></div>
+          <span class="code-window-title">about.sh</span>
+        </div>
+        <div class="code-window-body">
+          <pre><code><span class="code-keyword">echo</span> <span class="code-string">"文章: {{ site.posts.size }} 篇"</span>
+<span class="code-keyword">echo</span> <span class="code-string">"标签: {{ site.tags.size }} 个"</span>
+<span class="code-keyword">echo</span> <span class="code-string">"始于: {% assign last_year = site.posts.last.date | date: '%Y' %}{{ last_year }} 年"</span>
+<span class="code-function">open</span> <span class="code-string">"https://foamvalue.github.io"</span></code></pre>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- 最新文章 -->
-<section class="section">
-  <div class="section-header">
-    <h2 class="section-title">最新文章</h2>
-    <a href="{{ '/posts/' | relative_url }}" class="section-link">查看全部 →</a>
+<section class="home-latest">
+  <div class="home-section-header">
+    <h2 class="home-section-title">最新文章</h2>
+    <a href="{{ '/posts/' | relative_url }}" class="home-section-link">全部文章 →</a>
   </div>
-  
-  <div class="post-grid">
-    {% for post in site.posts limit:6 %}
-    <article class="post-card">
-      {% if post.cover_image %}
-      <div class="post-card-image">
-        <a href="{{ post.url | relative_url }}">
-          <img src="{{ post.cover_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
-        </a>
-      </div>
-      {% endif %}
-      <div class="post-card-content">
-        <div class="post-card-meta">
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y年%m月%d日" }}</time>
-          {% if post.categories.first %}
-          <span class="post-card-category">{{ post.categories.first }}</span>
-          {% endif %}
-        </div>
-        <h3 class="post-card-title">
-          <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h3>
-        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+
+  <div class="home-post-list">
+    {% for post in site.posts limit:8 %}
+    <article class="archive-item">
+      <a class="archive-item-link" href="{{ post.url | relative_url }}">
+        <time class="archive-item-date" datetime="{{ post.date | date_to_xmlschema }}">
+          {{ post.date | date: "%m.%d" }}
+        </time>
+        <span class="archive-item-title">{{ post.title | escape }}</span>
+        <span class="archive-item-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <div class="archive-item-meta">
+        {% assign post_author = post.author | default: "陈鑫杰" %}
+        <span class="archive-item-author">{{ post_author }}</span>
         {% if post.tags.size > 0 %}
-        <div class="post-card-tags">
+        <div class="archive-item-tags">
           {% for tag in post.tags limit:3 %}
-          <span class="post-card-tag">#{{ tag }}</span>
+          <a href="/tags/#{{ tag | slugify }}" class="archive-item-tag">{{ tag }}</a>
           {% endfor %}
         </div>
         {% endif %}
@@ -73,5 +65,3 @@ title: 首页
     {% endfor %}
   </div>
 </section>
-
-

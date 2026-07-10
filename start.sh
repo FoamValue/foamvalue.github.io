@@ -37,4 +37,4 @@ echo ""
 echo "Press Ctrl+C to stop."
 echo ""
 
-bundle exec jekyll serve --port "$PORT"
+bundle exec jekyll serve --port "$PORT" --drafts
