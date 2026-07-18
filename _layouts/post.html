@@ -23,7 +23,7 @@ layout: default
 
   {% if page.cover_image %}
   <div class="post-article-cover">
-    <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title | escape }}" loading="lazy">
+    <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title | escape }}" loading="eager" fetchpriority="high" decoding="async">
   </div>
   {% endif %}
 

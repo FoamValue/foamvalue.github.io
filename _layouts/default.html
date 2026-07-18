@@ -10,10 +10,24 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
   
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  
+  <!-- Preconnect to font origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Google Fonts: Inter + JetBrains Mono (critical, loaded synchronously) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Chinese fonts: loaded asynchronously, non-blocking -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="{{ '/assets/css/main.min.css' | relative_url }}" as="style">
   
   <!-- Styles -->
   <link rel="stylesheet" href="{{ '/assets/css/main.min.css' | relative_url }}">
@@ -33,6 +47,6 @@
     {% include footer.html %}
   </div>
   
-  <script src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
 </body>
 </html>

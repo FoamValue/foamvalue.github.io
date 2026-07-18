@@ -445,24 +445,71 @@ function initCodeCopy() {
   });
 }
 
+/**
+ * 初始化图片懒加载与性能优化
+ * 1. 为所有未标记 lazy 的内容图片添加 loading="lazy" 和 decoding="async"
+ * 2. 添加骨架屏占位防止 CLS
+ * 3. 图片加载完成后移除骨架屏
+ */
 function initLazyLoad() {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  
+  // 为文章/页面内容中所有未标记 lazy 的图片添加懒加载属性
+  var contentImages = document.querySelectorAll(
+    '.post-article-content img, .post-content img, .page-content img, .page-article-content img'
+  );
+  contentImages.forEach(function(img) {
+    if (!img.hasAttribute('loading')) {
+      img.setAttribute('loading', 'lazy');
+    }
+    if (!img.hasAttribute('decoding')) {
+      img.setAttribute('decoding', 'async');
+    }
+    // 添加骨架屏占位类
+    if (!img.classList.contains('img-loaded')) {
+      img.classList.add('img-loading');
+    }
+  });
+
+  // 使用 IntersectionObserver 监控懒加载图片
+  var lazyImages = document.querySelectorAll('img[loading="lazy"]');
   if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver(function(entries) {
+    var imageObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          const img = entry.target;
-          img.classList.add('loaded');
+          var img = entry.target;
+          img.classList.remove('img-loading');
+          img.classList.add('img-loaded');
           imageObserver.unobserve(img);
         }
       });
-    });
-    
-    images.forEach(function(img) {
+    }, { rootMargin: '200px 0px' });
+
+    lazyImages.forEach(function(img) {
       imageObserver.observe(img);
     });
+  } else {
+    // Fallback: 直接标记已加载
+    lazyImages.forEach(function(img) {
+      img.classList.remove('img-loading');
+      img.classList.add('img-loaded');
+    });
   }
+
+  // 对已完成加载的图片（首屏图片等）直接移除骨架
+  document.querySelectorAll('img').forEach(function(img) {
+    if (img.complete && img.naturalWidth > 0) {
+      img.classList.remove('img-loading');
+      img.classList.add('img-loaded');
+    } else {
+      img.addEventListener('load', function() {
+        this.classList.remove('img-loading');
+        this.classList.add('img-loaded');
+      });
+      img.addEventListener('error', function() {
+        this.classList.remove('img-loading');
+        this.classList.add('img-error');
+      });
+    }
+  });
 }
 
 /**
@@ -470,7 +517,7 @@ function initLazyLoad() {
  * 为文章内容和页面内容中的图片添加点击放大效果，支持ESC键关闭和点击遮罩层关闭
  */
 function initImageLightbox() {
-  const contentImages = document.querySelectorAll('.post-content img, .page-content img');
+  const contentImages = document.querySelectorAll('.post-content img, .page-content img, .post-article-content img, .page-article-content img');
   
   contentImages.forEach(function(img) {
     img.style.cursor = 'zoom-in';
@@ -485,7 +532,7 @@ function initImageLightbox() {
     lightbox.innerHTML = `
       <div class="lightbox-overlay"></div>
       <div class="lightbox-content">
-        <img src="${src}" alt="${alt}" loading="lazy">
+        <img src="${src}" alt="${alt}" loading="lazy" decoding="async">
         ${alt ? `<p class="lightbox-caption">${alt}</p>` : ''}
       </div>
       <button class="lightbox-close" aria-label="关闭">
