@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="tc1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="tc2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe"/>
+      <stop offset="100%" style="stop-color:#00f2fe"/>
+    </linearGradient>
+    <linearGradient id="tc3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#43e97b"/>
+      <stop offset="100%" style="stop-color:#38f9d7"/>
+    </linearGradient>
+    <linearGradient id="tc4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fa709a"/>
+      <stop offset="100%" style="stop-color:#fee140"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="300" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">AI 辅助测试验证流程</text>
+
+  <!-- 步骤1 -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="55" width="160" height="70" rx="10" fill="url(#tc1)"/>
+    <text x="110" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">① 描述需求给 AI</text>
+    <text x="110" y="100" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">用自然语言描述功能</text>
+    <text x="110" y="115" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">让 AI 生成测试用例</text>
+  </g>
+
+  <!-- 步骤2 -->
+  <g filter="url(#shadow)">
+    <rect x="220" y="55" width="160" height="70" rx="10" fill="url(#tc2)"/>
+    <text x="300" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">② 审查用例</text>
+    <text x="300" y="100" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">补充边界条件</text>
+    <text x="300" y="115" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">覆盖异常场景</text>
+  </g>
+
+  <!-- 步骤3 -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="55" width="160" height="70" rx="10" fill="url(#tc3)"/>
+    <text x="490" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">③ 自动化执行</text>
+    <text x="490" y="100" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">AI 编写测试脚本</text>
+    <text x="490" y="115" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">一键运行验证</text>
+  </g>
+
+  <!-- 箭头 -->
+  <line x1="190" y1="90" x2="215" y2="90" stroke="#888" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="380" y1="90" x2="405" y2="90" stroke="#888" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 详细表格 -->
+  <rect x="30" y="150" width="540" height="130" rx="10" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <text x="50" y="175" font-size="12" font-weight="bold" fill="#333">AI 生成的测试用例示例（登录功能）</text>
+
+  <line x1="50" y1="185" x2="550" y2="185" stroke="#dee2e6" stroke-width="1"/>
+
+  <rect x="50" y="190" width="120" height="25" fill="#e8f4fd"/>
+  <text x="60" y="207" font-size="11" fill="#4facfe" font-weight="bold">用例编号</text>
+  <rect x="170" y="190" width="200" height="25" fill="#e8f4fd"/>
+  <text x="180" y="207" font-size="11" fill="#4facfe" font-weight="bold">测试场景</text>
+  <rect x="370" y="190" width="180" height="25" fill="#e8f4fd"/>
+  <text x="380" y="207" font-size="11" fill="#4facfe" font-weight="bold">预期结果</text>
+
+  <text x="60" y="232" font-size="11" fill="#333">TC-001</text>
+  <text x="180" y="232" font-size="11" fill="#333">输入正确用户名密码</text>
+  <text x="380" y="232" font-size="11" fill="#43e97b">登录成功</text>
+
+  <text x="60" y="252" font-size="11" fill="#333">TC-002</text>
+  <text x="180" y="252" font-size="11" fill="#333">密码为空</text>
+  <text x="380" y="252" font-size="11" fill="#fa709a">提示"密码不能为空"</text>
+
+  <text x="60" y="272" font-size="11" fill="#333">TC-003</text>
+  <text x="180" y="272" font-size="11" fill="#333">密码错误 5 次</text>
+  <text x="380" y="272" font-size="11" fill="#fa709a">账号临时锁定 30 分钟</text>
+
+  <!-- 验证结果示意 -->
+  <rect x="30" y="300" width="540" height="80" rx="10" fill="#f0fdf4" stroke="#43e97b" stroke-width="1"/>
+  <text x="50" y="325" font-size="12" font-weight="bold" fill="#43e97b">✅ 自动化测试执行结果</text>
+  <text x="50" y="348" font-size="11" fill="#333">✓ TC-001 通过 | ✓ TC-002 通过 | ✓ TC-003 通过</text>
+  <text x="50" y="368" font-size="11" fill="#888">耗时：3.2秒 | 覆盖率：85%</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#888"/>
+    </marker>
+  </defs>
+</svg>

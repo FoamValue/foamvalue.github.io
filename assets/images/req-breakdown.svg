@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="rt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="rb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe"/>
+      <stop offset="100%" style="stop-color:#00f2fe"/>
+    </linearGradient>
+    <linearGradient id="rc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#43e97b"/>
+      <stop offset="100%" style="stop-color:#38f9d7"/>
+    </linearGradient>
+    <linearGradient id="rd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fa709a"/>
+      <stop offset="100%" style="stop-color:#fee140"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="350" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">需求拆分过程</text>
+
+  <!-- 原始需求（顶层） -->
+  <g filter="url(#shadow)">
+    <rect x="200" y="50" width="300" height="50" rx="25" fill="url(#rt)"/>
+    <text x="350" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">原始需求：构建一个博客系统</text>
+  </g>
+
+  <line x1="350" y1="100" x2="350" y2="125" stroke="#888" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="350" y1="125" x2="130" y2="125" stroke="#888" stroke-width="1.5"/>
+  <line x1="350" y1="125" x2="570" y2="125" stroke="#888" stroke-width="1.5"/>
+
+  <!-- 第一层拆分 -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="130" width="180" height="44" rx="10" fill="url(#rb)"/>
+    <text x="130" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">功能需求</text>
+    <text x="130" y="166" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">用户看到的界面与交互</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="260" y="130" width="180" height="44" rx="10" fill="url(#rc)"/>
+    <text x="350" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">数据需求</text>
+    <text x="350" y="166" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">存储与数据结构设计</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="480" y="130" width="180" height="44" rx="10" fill="url(#rd)"/>
+    <text x="570" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">非功能需求</text>
+    <text x="570" y="166" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">性能/安全/可扩展性</text>
+  </g>
+
+  <!-- 第二层拆分 - 功能需求 -->
+  <line x1="130" y1="174" x2="130" y2="195" stroke="#888" stroke-width="1.5"/>
+  <line x1="130" y1="195" x2="40" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="130" y1="195" x2="130" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="130" y1="195" x2="220" y2="195" stroke="#888" stroke-width="1"/>
+
+  <rect x="10" y="200" width="100" height="36" rx="8" fill="#e8f4fd" stroke="#4facfe" stroke-width="1"/>
+  <text x="60" y="218" text-anchor="middle" font-size="11" fill="#4facfe">文章 CRUD</text>
+  <text x="60" y="230" text-anchor="middle" font-size="9" fill="#888">增删改查</text>
+
+  <rect x="80" y="200" width="100" height="36" rx="8" fill="#e8f4fd" stroke="#4facfe" stroke-width="1"/>
+  <text x="130" y="218" text-anchor="middle" font-size="11" fill="#4facfe">用户登录</text>
+  <text x="130" y="230" text-anchor="middle" font-size="9" fill="#888">身份认证</text>
+
+  <rect x="190" y="200" width="60" height="36" rx="8" fill="#e8f4fd" stroke="#4facfe" stroke-width="1"/>
+  <text x="220" y="218" text-anchor="middle" font-size="11" fill="#4facfe">评论</text>
+  <text x="220" y="230" text-anchor="middle" font-size="9" fill="#888">互动</text>
+
+  <!-- 第二层拆分 - 数据需求 -->
+  <line x1="350" y1="174" x2="350" y2="195" stroke="#888" stroke-width="1.5"/>
+  <line x1="350" y1="195" x2="280" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="350" y1="195" x2="350" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="350" y1="195" x2="420" y2="195" stroke="#888" stroke-width="1"/>
+
+  <rect x="270" y="200" width="80" height="36" rx="8" fill="#e8fae8" stroke="#43e97b" stroke-width="1"/>
+  <text x="310" y="218" text-anchor="middle" font-size="11" fill="#43e97b">MySQL 表结构</text>
+  <text x="310" y="230" text-anchor="middle" font-size="9" fill="#888">文章/用户表</text>
+
+  <rect x="360" y="200" width="70" height="36" rx="8" fill="#e8fae8" stroke="#43e97b" stroke-width="1"/>
+  <text x="395" y="218" text-anchor="middle" font-size="11" fill="#43e97b">缓存</text>
+  <text x="395" y="230" text-anchor="middle" font-size="9" fill="#888">Redis 热点</text>
+
+  <!-- 第二层拆分 - 非功能需求 -->
+  <line x1="570" y1="174" x2="570" y2="195" stroke="#888" stroke-width="1.5"/>
+  <line x1="570" y1="195" x2="510" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="570" y1="195" x2="570" y2="195" stroke="#888" stroke-width="1"/>
+  <line x1="570" y1="195" x2="630" y2="195" stroke="#888" stroke-width="1"/>
+
+  <rect x="500" y="200" width="70" height="36" rx="8" fill="#fef5e7" stroke="#fa709a" stroke-width="1"/>
+  <text x="535" y="218" text-anchor="middle" font-size="11" fill="#fa709a">页面加载</text>
+  <text x="535" y="230" text-anchor="middle" font-size="9" fill="#888">&lt; 1s</text>
+
+  <rect x="580" y="200" width="60" height="36" rx="8" fill="#fef5e7" stroke="#fa709a" stroke-width="1"/>
+  <text x="610" y="218" text-anchor="middle" font-size="11" fill="#fa709a">安全</text>
+  <text x="610" y="230" text-anchor="middle" font-size="9" fill="#888">XSS/SQL 注入</text>
+
+  <!-- 底部说明 -->
+  <text x="350" y="270" text-anchor="middle" font-size="11" fill="#999">提示：AI 可以帮助将模糊需求自动拆解成结构化任务列表</text>
+
+  <!-- 示例对话 -->
+  <rect x="100" y="290" width="500" height="110" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <text x="120" y="315" font-size="11" fill="#666">💬 示例对话：</text>
+  <text x="120" y="335" font-size="11" fill="#333">你：</text>
+  <text x="145" y="335" font-size="11" fill="#333">"我想做一个博客系统，帮我拆解一下需求"</text>
+  <text x="120" y="358" font-size="11" fill="#4facfe">AI：</text>
+  <text x="145" y="358" font-size="11" fill="#4facfe">"可以从三个维度拆分：</text>
+  <text x="145" y="378" font-size="11" fill="#4facfe">1. 功能需求：文章管理、用户系统、评论互动</text>
+  <text x="145" y="395" font-size="11" fill="#4facfe">2. 数据需求：数据库表设计、缓存策略</text>
+  <text x="145" y="395" font-size="11" fill="#4facfe">                    3. 非功能需求：性能指标、安全防护"</text>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#888"/>
+    </marker>
+  </defs>
+</svg>
