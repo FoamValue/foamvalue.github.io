@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b"/>
+      <stop offset="100%" style="stop-color:#ee5a24"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0abde3"/>
+      <stop offset="100%" style="stop-color:#48dbfb"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="360" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">AI = 超级实习生</text>
+  <text x="360" y="55" text-anchor="middle" font-size="12" fill="#888">同样一个人，模糊指令 vs 清晰指令，结果天差地别</text>
+
+  <!-- 左侧：模糊指令 -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="75" width="310" height="50" rx="25" fill="url(#g1)"/>
+    <text x="185" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">❌ 模糊指令</text>
+  </g>
+
+  <rect x="30" y="140" width="310" height="180" rx="14" fill="#fff5f5" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="50" y="170" font-size="13" fill="#333">“去帮我查点东西。”</text>
+  <line x1="50" y1="185" x2="320" y2="185" stroke="#ffcccc" stroke-width="1"/>
+
+  <text x="50" y="210" font-size="12" fill="#666">实习生内心：</text>
+  <text x="50" y="230" font-size="12" fill="#999">“查什么？去哪查？查完怎么给你？”</text>
+
+  <text x="50" y="260" font-size="12" fill="#666">结果：</text>
+  <text x="50" y="280" font-size="12" fill="#ff6b6b" font-weight="bold">一脸茫然，无从下手</text>
+  <text x="50" y="300" font-size="12" fill="#ff6b6b">返工 3 次，耗时 2 小时</text>
+
+  <!-- 箭头 -->
+  <text x="360" y="220" text-anchor="middle" font-size="30" fill="#ddd">→</text>
+
+  <!-- 右侧：清晰指令 -->
+  <g filter="url(#shadow)">
+    <rect x="380" y="75" width="310" height="50" rx="25" fill="url(#g2)"/>
+    <text x="535" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">✅ 清晰指令</text>
+  </g>
+
+  <rect x="380" y="140" width="310" height="180" rx="14" fill="#f0faff" stroke="#0abde3" stroke-width="1.5"/>
+  <text x="400" y="170" font-size="13" fill="#333">“请查阅 2025 年 AI 在医疗领域的应用，</text>
+  <text x="400" y="188" font-size="13" fill="#333">整理成 5 个要点的简报并标注来源。”</text>
+
+  <line x1="400" y1="205" x2="670" y2="205" stroke="#b3e0ff" stroke-width="1"/>
+
+  <text x="400" y="230" font-size="12" fill="#666">实习生内心：</text>
+  <text x="400" y="250" font-size="12" fill="#999">“主题明确、格式清晰、交付标准清楚，干！”</text>
+
+  <text x="400" y="280" font-size="12" fill="#666">结果：</text>
+  <text x="400" y="300" font-size="12" fill="#0abde3" font-weight="bold">一次到位，准时交付</text>
+  <text x="400" y="320" font-size="12" fill="#0abde3">耗时 20 分钟</text>
+
+  <!-- 底部总结 -->
+  <rect x="150" y="340" width="420" height="28" rx="14" fill="#f0f0f0"/>
+  <text x="360" y="359" text-anchor="middle" font-size="12" fill="#666">💡 指令越模糊，AI 越迷茫；指令越清晰，AI 越靠谱</text>
+</svg>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="cr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="ct" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb"/>
+      <stop offset="100%" style="stop-color:#f5576c"/>
+    </linearGradient>
+    <linearGradient id="cc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe"/>
+      <stop offset="100%" style="stop-color:#00f2fe"/>
+    </linearGradient>
+    <linearGradient id="cf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#43e97b"/>
+      <stop offset="100%" style="stop-color:#38f9d7"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="350" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">写好 Prompt 的四大要素</text>
+
+  <!-- 中心圆 -->
+  <circle cx="350" cy="190" r="45" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <text x="350" y="185" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Prompt</text>
+  <text x="350" y="205" text-anchor="middle" font-size="11" fill="#999">提示词</text>
+
+  <!-- 连线 -->
+  <line x1="350" y1="145" x2="350" y2="100" stroke="#667eea" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="305" y1="165" x2="120" y2="105" stroke="#f093fb" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="395" y1="165" x2="580" y2="105" stroke="#4facfe" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="350" y1="235" x2="350" y2="280" stroke="#43e97b" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- 角色 -->
+  <g filter="url(#shadow)">
+    <rect x="270" y="55" width="160" height="48" rx="24" fill="url(#cr)"/>
+    <text x="350" y="78" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">🎭 角色 (Role)</text>
+    <text x="350" y="96" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">让 AI 代入特定身份</text>
+  </g>
+
+  <rect x="15" y="100" width="160" height="60" rx="10" fill="#f3f0ff" stroke="#667eea" stroke-width="1"/>
+  <text x="95" y="125" text-anchor="middle" font-size="11" fill="#667eea" font-weight="bold">例：你是一位资深</text>
+  <text x="95" y="145" text-anchor="middle" font-size="11" fill="#667eea" font-weight="bold">心理咨询师……</text>
+
+  <!-- 任务 -->
+  <g filter="url(#shadow)">
+    <rect x="55" y="155" width="160" height="48" rx="24" fill="url(#ct)"/>
+    <text x="135" y="178" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">📝 任务 (Task)</text>
+    <text x="135" y="196" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">明确具体的动作指令</text>
+  </g>
+
+  <rect x="15" y="210" width="160" height="60" rx="10" fill="#fff0f3" stroke="#f093fb" stroke-width="1"/>
+  <text x="95" y="235" text-anchor="middle" font-size="11" fill="#f5576c" font-weight="bold">例：帮我写一封</text>
+  <text x="95" y="255" text-anchor="middle" font-size="11" fill="#f5576c" font-weight="bold">回复客户的道歉邮件</text>
+
+  <!-- 上下文 -->
+  <g filter="url(#shadow)">
+    <rect x="485" y="155" width="160" height="48" rx="24" fill="url(#cc)"/>
+    <text x="565" y="178" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">📖 上下文 (Context)</text>
+    <text x="565" y="196" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">提供充分的背景信息</text>
+  </g>
+
+  <rect x="525" y="210" width="160" height="60" rx="10" fill="#f0faff" stroke="#4facfe" stroke-width="1"/>
+  <text x="605" y="235" text-anchor="middle" font-size="11" fill="#4facfe" font-weight="bold">例：客户因发货延迟</text>
+  <text x="605" y="255" text-anchor="middle" font-size="11" fill="#4facfe" font-weight="bold">很生气，订单号 12345</text>
+
+  <!-- 格式 -->
+  <g filter="url(#shadow)">
+    <rect x="270" y="275" width="160" height="48" rx="24" fill="url(#cf)"/>
+    <text x="350" y="298" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">📐 格式 (Format)</text>
+    <text x="350" y="316" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.85)">规定输出的样式和结构</text>
+  </g>
+
+  <rect x="270" y="330" width="160" height="22" rx="10" fill="#f0fdf4" stroke="#43e97b" stroke-width="1"/>
+  <text x="350" y="345" text-anchor="middle" font-size="11" fill="#43e97b" font-weight="bold">例：200 字以内，正式书信格式</text>
+</svg>
