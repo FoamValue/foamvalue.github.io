@@ -1,0 +1,421 @@
+---
+layout: default
+title: 树叶课堂
+permalink: /leaves/
+---
+
+<section class="leaves-page">
+  <div class="leaves-hero">
+    <div class="leaves-hero-text">
+      <h1 class="leaves-title"><span class="leaves-title-emoji">🍃</span> 树叶课堂</h1>
+      <p class="leaves-subtitle">点一点卡片，认识可爱的树叶朋友吧！</p>
+    </div>
+    <button id="leaves-immersive-btn" class="leaves-immersive-btn" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+        <path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+      <span class="leaves-immersive-label">沉浸学习</span>
+    </button>
+  </div>
+
+  <div class="leaves-grid" id="leaves-grid" role="list"></div>
+
+  <p class="leaves-tip">小提示：按下全屏（F11 或「沉浸学习」按钮），头尾会自动藏起来，学习更专注哦。</p>
+</section>
+
+<!-- 树叶详情弹窗 -->
+<div class="leaf-modal" id="leaf-modal" hidden>
+  <div class="leaf-modal-backdrop" data-leaf-close></div>
+  <div class="leaf-modal-card" role="dialog" aria-modal="true" aria-labelledby="leaf-modal-name">
+    <button class="leaf-modal-close" type="button" data-leaf-close aria-label="关闭">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+      </svg>
+    </button>
+    <div class="leaf-modal-media">
+      <img id="leaf-modal-img" src="" alt="">
+    </div>
+    <div class="leaf-modal-body">
+      <div class="leaf-modal-chars" id="leaf-modal-chars"></div>
+      <div class="leaf-modal-facts">
+        <div class="leaf-fact-row"><span class="leaf-fact-label">形状</span><span class="leaf-fact-value" id="leaf-modal-shape"></span></div>
+        <div class="leaf-fact-row"><span class="leaf-fact-label">颜色</span><span class="leaf-fact-value" id="leaf-modal-color"></span></div>
+      </div>
+      <p class="leaf-modal-intro" id="leaf-modal-intro"></p>
+      <div class="leaf-modal-fun"><span class="leaf-fun-badge">🧐 小知识</span><p id="leaf-modal-fun"></p></div>
+      <div class="leaf-modal-nav">
+        <button type="button" class="leaf-nav-btn" id="leaf-prev">← 上一片</button>
+        <button type="button" class="leaf-nav-btn" id="leaf-next">下一片 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ===== 树叶课堂 ===== */
+  /* 变量同时挂到 .leaf-modal：弹窗是 .leaves-page 的兄弟节点，需单独取得变量 */
+  .leaves-page, .leaf-modal { --leaf-green: #16a34a; --leaf-green-dark: #15803d; --leaf-cream: #fdf9ef; }
+
+  .leaves-hero {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding: 28px 32px; border-radius: 28px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 55%, #fefce8 100%);
+    border: 2px dashed #bbf7d0;
+  }
+  .leaves-title { margin: 0; font-size: 34px; font-weight: 700; color: var(--leaf-green-dark); letter-spacing: 2px; }
+  .leaves-title-emoji { display: inline-block; transform-origin: bottom center; animation: leaf-sway 3s ease-in-out infinite; }
+  @keyframes leaf-sway { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(10deg); } }
+  .leaves-subtitle { margin: 8px 0 0; font-size: 17px; color: #4d7c0f; }
+
+  .leaves-immersive-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--leaf-green); color: #fff; font-size: 16px; font-weight: 600; letter-spacing: 1px;
+    box-shadow: 0 6px 16px rgba(22, 163, 74, .35); transition: transform .15s ease, background .15s ease;
+  }
+  .leaves-immersive-btn:hover { background: var(--leaf-green-dark); transform: translateY(-2px); }
+  .leaves-immersive-btn:active { transform: translateY(0); }
+
+  .leaves-grid {
+    margin-top: 28px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+  }
+  @media (max-width: 1024px) { .leaves-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .leaves-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+
+  .leaf-card {
+    position: relative; border: none; padding: 0; cursor: pointer; text-align: center;
+    background: var(--color-bg-card, #fff); border-radius: 22px; overflow: hidden;
+    box-shadow: 0 4px 14px rgba(22, 101, 52, .10);
+    transition: transform .2s ease, box-shadow .2s ease;
+    font-family: inherit;
+  }
+  .leaf-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 12px 24px rgba(22, 101, 52, .18); }
+  .leaf-card:focus-visible { outline: 3px solid var(--leaf-green); outline-offset: 3px; }
+
+  .leaf-card-media { aspect-ratio: 1 / 1; overflow: hidden; }
+  .leaf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .leaf-card-body { padding: 14px 10px 18px; background: var(--leaf-cream); }
+  .leaf-card-name { font-size: 26px; font-weight: 700; color: #1f2937; letter-spacing: 3px; line-height: 1.2; }
+  .leaf-card-pinyin { margin-top: 4px; font-size: 15px; color: var(--leaf-green); letter-spacing: 1px; }
+
+  .leaves-tip { margin-top: 26px; text-align: center; font-size: 14px; color: var(--color-text-tertiary, #71717a); }
+
+  /* ===== 沉浸模式：全屏时隐藏头尾 ===== */
+  html.is-immersive .site-header,
+  html.is-immersive .site-footer { display: none !important; }
+  html.is-immersive .main-content { max-width: 100%; padding: 20px clamp(12px, 3vw, 40px) 0; }
+  html.is-immersive .leaves-hero { padding: 16px 24px; border-radius: 20px; }
+  html.is-immersive .leaves-title { font-size: 26px; }
+  html.is-immersive .leaves-subtitle { font-size: 15px; margin-top: 4px; }
+  html.is-immersive .leaves-grid { margin-top: 18px; gap: 18px; }
+  html.is-immersive .leaves-tip { display: none; }
+
+  /* ===== 详情弹窗 ===== */
+  .leaf-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .leaf-modal[hidden] { display: none; }
+  .leaf-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 42, 23, .55); backdrop-filter: blur(3px); }
+  .leaf-modal-card {
+    position: relative; width: min(880px, 100%); height: min(560px, 88vh); overflow: auto;
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 0;
+    background: var(--leaf-cream); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, .3);
+    animation: leaf-pop .25s ease;
+  }
+  @keyframes leaf-pop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @media (max-width: 700px) { .leaf-modal-card { grid-template-columns: 1fr; height: min(680px, 94vh); } }
+
+  .leaf-modal-media { min-height: 320px; }
+  .leaf-modal-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 700px) { .leaf-modal-media { min-height: 0; max-height: 300px; } }
+
+  .leaf-modal-body { padding: 26px 28px 22px; display: flex; flex-direction: column; gap: 16px; }
+  .leaf-modal-close {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer;
+    background: rgba(255, 255, 255, .9); color: #374151;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15); transition: transform .15s ease;
+  }
+  .leaf-modal-close:hover { transform: rotate(90deg); }
+
+  .leaf-modal-chars { display: flex; gap: 12px; }
+  .leaf-char {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    min-width: 84px; padding: 10px 14px 12px; border-radius: 18px;
+    background: #fff; border: 2px solid #d9f0dd;
+  }
+  .leaf-char-pinyin { font-size: 17px; font-weight: 600; color: var(--leaf-green); letter-spacing: 1px; }
+  .leaf-char-hanzi { font-size: 40px; font-weight: 700; color: #1f2937; line-height: 1.15; }
+
+  .leaf-modal-facts { display: flex; flex-direction: column; gap: 8px; }
+  .leaf-fact-row { display: flex; align-items: baseline; gap: 10px; font-size: 15px; }
+  .leaf-fact-label {
+    flex: none; padding: 3px 12px; border-radius: 999px;
+    background: #dcfce7; color: var(--leaf-green-dark); font-weight: 600; font-size: 13px;
+  }
+  .leaf-fact-value { color: #374151; }
+
+  .leaf-modal-intro {
+    margin: 0; font-size: 17px; line-height: 1.9; color: #374151;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .leaf-modal-fun {
+    padding: 14px 16px; border-radius: 16px;
+    background: #fef9c3; border: 1.5px dashed #fde047;
+  }
+  .leaf-fun-badge { display: block; font-weight: 700; color: #a16207; margin-bottom: 6px; font-size: 14px; }
+  .leaf-modal-fun p {
+    margin: 0; font-size: 15px; line-height: 1.8; color: #713f12;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .leaf-modal-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: auto; }
+  .leaf-nav-btn {
+    padding: 10px 20px; border: 2px solid #bbf7d0; border-radius: 999px; cursor: pointer;
+    background: #fff; color: var(--leaf-green-dark); font-size: 15px; font-weight: 600;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .leaf-nav-btn:hover { background: #f0fdf4; transform: translateY(-2px); }
+
+  @media (max-width: 640px) {
+    .leaves-hero { padding: 20px; }
+    .leaves-title { font-size: 26px; }
+    .leaf-card-name { font-size: 20px; letter-spacing: 2px; }
+    .leaf-modal-body { padding: 20px; }
+    .leaf-char { min-width: 64px; padding: 8px 10px 10px; }
+    .leaf-char-hanzi { font-size: 30px; }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  var imgBase = '{{ "/assets/images/leaves/" | relative_url }}';
+
+  var LEAVES = [
+    {
+      name: '枫叶', chars: [['枫', 'fēng'], ['叶', 'yè']], img: 'maple.jpg',
+      shape: '像小手掌，有五个尖尖的角', color: '春夏绿色，秋天变红',
+      intro: '枫叶像一只张开的小手掌，有五个尖尖的角。秋天它会悄悄换上红衣裳，像一团团小火苗，漂亮极了！',
+      fun: '加拿大国旗上，就画着一片大大的枫叶。'
+    },
+    {
+      name: '银杏叶', chars: [['银', 'yín'], ['杏', 'xìng'], ['叶', 'yè']], img: 'ginkgo.jpg',
+      shape: '像一把小扇子', color: '春夏绿色，秋天变金黄',
+      intro: '银杏叶像一把小扇子，摇一摇，给小朋友送来凉凉的风。秋天它变成金黄金黄，像小星星飘下来。',
+      fun: '银杏树和恐龙做过邻居，是世界上最古老的树之一。'
+    },
+    {
+      name: '梧桐叶', chars: [['梧', 'wú'], ['桐', 'tóng'], ['叶', 'yè']], img: 'wutong.jpg',
+      shape: '大大的手掌形', color: '春夏绿色，秋天变黄',
+      intro: '梧桐叶又大又圆，像大象的大耳朵。风一吹，它就哗啦啦地唱歌，秋天还会跳着舞落下来。',
+      fun: '一片大梧桐叶，比小朋友的脸还要大！'
+    },
+    {
+      name: '柳叶', chars: [['柳', 'liǔ'], ['叶', 'yè']], img: 'willow.jpg',
+      shape: '细细长长，像小船', color: '嫩嫩的绿色',
+      intro: '柳叶细细长长，像弯弯的小船。柳枝垂到小河里，风一吹轻轻摆动，鱼儿把它当小秋千荡。',
+      fun: '柳树春天最早发芽，是报春的小信使。'
+    },
+    {
+      name: '松针', chars: [['松', 'sōng'], ['针', 'zhēn']], img: 'pine.jpg',
+      shape: '细细的，像缝衣服的针', color: '深绿色，四季不变',
+      intro: '松树的叶子叫松针，细细尖尖的，摸起来有点扎手。一年四季，它都穿着绿衣裳。',
+      fun: '叶子像针，水分跑不掉，冬天再冷也不怕。'
+    },
+    {
+      name: '竹叶', chars: [['竹', 'zhú'], ['叶', 'yè']], img: 'bamboo.jpg',
+      shape: '又细又尖，像小宝剑', color: '翠绿翠绿的',
+      intro: '竹叶又细又尖，像一把把小宝剑。风一吹，沙沙沙、沙沙沙，好像竹子在说悄悄话。',
+      fun: '大熊猫最爱吃鲜嫩的竹叶和竹子。'
+    },
+    {
+      name: '樟树叶', chars: [['樟', 'zhāng'], ['树', 'shù'], ['叶', 'yè']], img: 'camphor.jpg',
+      shape: '椭圆形，亮亮的', color: '绿绿的，四季常绿',
+      intro: '樟树叶绿绿的、亮亮的，像涂了一层蜡。轻轻揉一揉，会闻到香香的味道，真神奇呀！',
+      fun: '樟树的香味虫子最害怕，樟木箱子不怕虫咬。'
+    },
+    {
+      name: '橡树叶', chars: [['橡', 'xiàng'], ['树', 'shù'], ['叶', 'yè']], img: 'oak.jpg',
+      shape: '边缘一圈波浪形', color: '绿色，秋天变黄褐',
+      intro: '橡树叶的边缘一圈一圈像波浪，真好看。它旁边睡着一个戴帽子的小果子，名字叫橡果。',
+      fun: '小松鼠爱收藏橡果，当作过冬的粮食。'
+    },
+    {
+      name: '杨树叶', chars: [['杨', 'yáng'], ['树', 'shù'], ['叶', 'yè']], img: 'poplar.jpg',
+      shape: '宽宽的卵形，叶柄长长的', color: '亮亮的绿色',
+      intro: '杨树叶圆圆宽宽，叶柄细细长长。风一吹，哗啦啦、哗啦啦，杨树就像在拍手唱歌。',
+      fun: '马路两边常种杨树，夏天给我们遮太阳。'
+    },
+    {
+      name: '桑叶', chars: [['桑', 'sāng'], ['叶', 'yè']], img: 'mulberry.jpg',
+      shape: '心形，边缘有小锯齿', color: '浓浓的绿色',
+      intro: '桑叶大大的、软软的，边缘有一圈小锯齿。它是蚕宝宝最喜欢的粮食，吃了能吐出白白的丝。',
+      fun: '蚕宝宝吃完桑叶吐出丝，丝能织成漂亮的丝绸。'
+    },
+    {
+      name: '榕树叶', chars: [['榕', 'róng'], ['树', 'shù'], ['叶', 'yè']], img: 'banyan.jpg',
+      shape: '椭圆形，滑滑亮亮', color: '深绿色，四季常绿',
+      intro: '榕树叶滑滑亮亮，一年四季都绿绿的。榕树垂下胡须一样的气根，一棵大树就像一片小森林。',
+      fun: '榕树"独木成林"，一棵树就能撑起大大的绿伞。'
+    },
+    {
+      name: '水杉叶', chars: [['水', 'shuǐ'], ['杉', 'shān'], ['叶', 'yè']], img: 'metasequoia.jpg',
+      shape: '像小鸟羽毛的细叶', color: '春夏绿色，秋天变红棕',
+      intro: '水杉叶细细的，像小鸟的羽毛，一根枝上排着许多小叶子。秋天它会变成红棕色，好看极了。',
+      fun: '水杉是中国特有的树，也是和恐龙同时代的活化石。'
+    },
+    {
+      name: '桃叶', chars: [['桃', 'táo'], ['叶', 'yè']], img: 'peach.jpg',
+      shape: '细细长长，像弯弯的眉毛', color: '嫩嫩的绿色',
+      intro: '桃叶细细长长，像弯弯的小眉毛。春天桃花谢了，它才慢慢长出来，陪伴小桃子长大。',
+      fun: '桃叶陪着桃子一起长大，甜甜的桃子人人爱。'
+    },
+    {
+      name: '槐树叶', chars: [['槐', 'huái'], ['树', 'shù'], ['叶', 'yè']], img: 'scholar.jpg',
+      shape: '一根叶柄串着许多小叶', color: '清清爽爽的绿色',
+      intro: '槐树叶最有趣，一根叶柄上串着许多小叶子，像排队的小娃娃。风一吹，它们就一起跳舞。',
+      fun: '槐树开花时，满树都是香香甜甜的槐花。'
+    },
+    {
+      name: '枇杷叶', chars: [['枇', 'pí'], ['杷', 'pá'], ['叶', 'yè']], img: 'loquat.jpg',
+      shape: '又大又长，边缘有锯齿', color: '深深的绿色',
+      intro: '枇杷叶又大又长，像一把大扇子，为冬天的小枇杷果挡风保暖。摸上去毛毛糙糙的。',
+      fun: '枇杷叶能做止咳糖浆，嗓子不舒服时帮大忙。'
+    },
+    {
+      name: '茶叶', chars: [['茶', 'chá'], ['叶', 'yè']], img: 'tea.jpg',
+      shape: '小小尖尖的椭圆形', color: '油亮亮的绿色',
+      intro: '茶叶小小的、尖尖的，长在矮矮的茶树上。摘下来晒一晒、炒一炒，就能泡出香香的茶。',
+      fun: '中国是茶的故乡，爷爷的茶杯里飘着茶香。'
+    },
+    {
+      name: '荷叶', chars: [['荷', 'hé'], ['叶', 'yè']], img: 'lotus.jpg',
+      shape: '圆圆大大，像绿圆盘', color: '碧绿碧绿的',
+      intro: '荷叶圆圆大大的，像一把撑开的绿伞。小水珠在叶子上滚来滚去，像亮晶晶的珍珠。',
+      fun: '荷叶是小青蛙的跳台，也是小鱼儿的小伞。'
+    },
+    {
+      name: '榆树叶', chars: [['榆', 'yú'], ['树', 'shù'], ['叶', 'yè']], img: 'elm.jpg',
+      shape: '圆圆的，边缘有小锯齿', color: '嫩嫩的黄绿色',
+      intro: '榆树叶圆圆的、小小的。春天它结出圆圆的榆钱，一串一串，像小铜钱挂满枝头。',
+      fun: '榆钱可以吃，从前的小朋友把它当零食。'
+    },
+    {
+      name: '桂花叶', chars: [['桂', 'guì'], ['花', 'huā'], ['叶', 'yè']], img: 'osmanthus.jpg',
+      shape: '长椭圆形，硬硬的', color: '油亮的深绿色',
+      intro: '桂花叶硬硬的、亮亮的，像涂了蜡。秋天桂花开了，叶子把香香的小花轻轻托住。',
+      fun: '八月桂花香，桂花能做甜甜的桂花糕。'
+    },
+    {
+      name: '芭蕉叶', chars: [['芭', 'bā'], ['蕉', 'jiāo'], ['叶', 'yè']], img: 'banana.jpg',
+      shape: '又大又长，像大扇子', color: '鲜鲜的绿色',
+      intro: '芭蕉叶又大又长，像一把绿色的大扇子。下雨时撑在头上，就是一把天然的小雨伞。',
+      fun: '西游记里铁扇公主的芭蕉扇，就是它的兄弟。'
+    }
+  ];
+
+  var grid = document.getElementById('leaves-grid');
+  var modal = document.getElementById('leaf-modal');
+  var current = 0;
+
+  /* 渲染卡片 */
+  LEAVES.forEach(function (leaf, i) {
+    var card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'leaf-card';
+    card.setAttribute('role', 'listitem');
+    card.setAttribute('aria-label', leaf.name + '，' + leaf.chars.map(function (c) { return c[1]; }).join(' '));
+    card.innerHTML =
+      '<span class="leaf-card-media"><img src="' + imgBase + leaf.img + '" alt="' + leaf.name + '" loading="lazy"></span>' +
+      '<span class="leaf-card-body"><span class="leaf-card-name">' + leaf.name + '</span>' +
+      '<span class="leaf-card-pinyin">' + leaf.chars.map(function (c) { return c[1]; }).join(' ') + '</span></span>';
+    card.addEventListener('click', function () { openModal(i); });
+    grid.appendChild(card);
+  });
+
+  /* 详情弹窗 */
+  function openModal(i) {
+    current = (i + LEAVES.length) % LEAVES.length;
+    var leaf = LEAVES[current];
+    var img = document.getElementById('leaf-modal-img');
+    img.src = imgBase + leaf.img;
+    img.alt = leaf.name + '图片';
+    document.getElementById('leaf-modal-chars').innerHTML = leaf.chars.map(function (c) {
+      return '<span class="leaf-char"><span class="leaf-char-pinyin">' + c[1] + '</span>' +
+             '<span class="leaf-char-hanzi">' + c[0] + '</span></span>';
+    }).join('');
+    document.getElementById('leaf-modal-shape').textContent = leaf.shape;
+    document.getElementById('leaf-modal-color').textContent = leaf.color;
+    document.getElementById('leaf-modal-intro').textContent = leaf.intro;
+    document.getElementById('leaf-modal-fun').textContent = leaf.fun;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  modal.addEventListener('click', function (e) {
+    if (e.target.closest('[data-leaf-close]')) closeModal();
+  });
+  document.getElementById('leaf-prev').addEventListener('click', function () { openModal(current - 1); });
+  document.getElementById('leaf-next').addEventListener('click', function () { openModal(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') openModal(current - 1);
+    if (e.key === 'ArrowRight') openModal(current + 1);
+  });
+
+  /* 沉浸模式：进入/退出全屏时隐藏头尾 */
+  var immersiveBtn = document.getElementById('leaves-immersive-btn');
+  var immersiveLabel = immersiveBtn.querySelector('.leaves-immersive-label');
+  var fallbackImmersive = false;
+
+  function fullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  function syncImmersive() {
+    var active = !!fullscreenElement() || fallbackImmersive;
+    document.documentElement.classList.toggle('is-immersive', active);
+    immersiveLabel.textContent = active ? '退出沉浸' : '沉浸学习';
+  }
+
+  immersiveBtn.addEventListener('click', function () {
+    var root = document.documentElement;
+    if (!fullscreenElement() && !fallbackImmersive) {
+      var request = root.requestFullscreen || root.webkitRequestFullscreen;
+      if (request) {
+        var result = request.call(root);
+        if (result && result.catch) {
+          result.catch(function () {
+            /* 全屏被拒绝时降级为页面内沉浸模式 */
+            fallbackImmersive = true;
+            syncImmersive();
+          });
+        }
+      } else {
+        fallbackImmersive = true;
+        syncImmersive();
+      }
+    } else if (fullscreenElement()) {
+      var exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) exit.call(document);
+    } else {
+      fallbackImmersive = false;
+      syncImmersive();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', syncImmersive);
+  document.addEventListener('webkitfullscreenchange', syncImmersive);
+  syncImmersive();
+})();
+</script>
