@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">断点续传完整流程</text>
+
+  <!-- 前端列 -->
+  <rect x="40" y="55" width="160" height="30" rx="6" fill="#e8f4fd"/>
+  <text x="120" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#2980b9">前端（浏览器）</text>
+
+  <!-- 后端列 -->
+  <rect x="600" y="55" width="160" height="30" rx="6" fill="#eafaf1"/>
+  <text x="680" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#27ae60">后端（服务端）</text>
+
+  <!-- Step 1: 计算 MD5 -->
+  <rect x="60" y="105" width="120" height="40" rx="8" fill="#3498db" filter="url(#shadow)"/>
+  <text x="120" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">计算文件 MD5</text>
+  <text x="120" y="137" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">spark-md5</text>
+
+  <!-- Arrow 1: 前端 → 后端 -->
+  <line x1="180" y1="125" x2="600" y2="125" stroke="#3498db" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="390" y="118" text-anchor="middle" font-size="10" fill="#3498db">① fileMd5</text>
+
+  <!-- Step 2: 检查秒传 -->
+  <rect x="600" y="105" width="160" height="40" rx="8" fill="#2ecc71" filter="url(#shadow)"/>
+  <text x="680" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">检查文件是否存在</text>
+  <text x="680" y="137" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">秒传？直接返回</text>
+
+  <!-- Arrow 2: 后端 → 前端 -->
+  <line x1="600" y1="155" x2="180" y2="155" stroke="#e67e22" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6,3"/>
+  <text x="390" y="170" text-anchor="middle" font-size="10" fill="#e67e22"> 不存在，继续上传</text>
+
+  <!-- Step 3: 查询已上传分片 -->
+  <rect x="60" y="185" width="120" height="40" rx="8" fill="#3498db" filter="url(#shadow)"/>
+  <text x="120" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">查询已传分片</text>
+  <text x="120" y="217" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">GET /chunks</text>
+
+  <!-- Arrow 3 -->
+  <line x1="180" y1="205" x2="600" y2="205" stroke="#3498db" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="390" y="198" text-anchor="middle" font-size="10" fill="#3498db">③ fileMd5 + totalChunks</text>
+
+  <!-- Step 4: 返回缺失分片 -->
+  <rect x="600" y="185" width="160" height="40" rx="8" fill="#2ecc71" filter="url(#shadow)"/>
+  <text x="680" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">返回缺失分片列表</text>
+  <text x="680" y="217" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">[2, 4, 6, 8, ...]</text>
+
+  <!-- Arrow 4 -->
+  <line x1="600" y1="235" x2="180" y2="235" stroke="#e67e22" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6,3"/>
+  <text x="390" y="250" text-anchor="middle" font-size="10" fill="#e67e22">④ 只传缺失的分片</text>
+
+  <!-- Step 5: 分片上传（循环） -->
+  <rect x="60" y="265" width="120" height="50" rx="8" fill="#9b59b6" filter="url(#shadow)"/>
+  <text x="120" y="285" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">分片上传</text>
+  <text x="120" y="300" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">POST /chunk</text>
+  <text x="120" y="312" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)">并发 3-5 个</text>
+
+  <!-- Loop indicator -->
+  <path d="M 180 290 Q 220 265 260 290 Q 300 315 340 290 Q 380 265 420 290 Q 460 315 500 290 Q 540 265 580 290" fill="none" stroke="#9b59b6" stroke-width="2" stroke-dasharray="4,3"/>
+
+  <!-- Arrow 5 -->
+  <line x1="180" y1="290" x2="600" y2="290" stroke="#9b59b6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="390" y="283" text-anchor="middle" font-size="10" fill="#9b59b6">⑤ chunk + chunkIndex</text>
+
+  <!-- Step 6: 存储分片 -->
+  <rect x="600" y="265" width="160" height="50" rx="8" fill="#2ecc71" filter="url(#shadow)"/>
+  <text x="680" y="285" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">存储分片文件</text>
+  <text x="680" y="300" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">/chunks/{md5}/{index}</text>
+  <text x="680" y="312" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)">按 MD5 分目录</text>
+
+  <!-- Arrow 6 -->
+  <line x1="600" y1="325" x2="180" y2="325" stroke="#e67e22" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6,3"/>
+  <text x="390" y="340" text-anchor="middle" font-size="10" fill="#e67e22">⑥ 全部上传完成</text>
+
+  <!-- Step 7: 合并请求 -->
+  <rect x="60" y="355" width="120" height="40" rx="8" fill="#e74c3c" filter="url(#shadow)"/>
+  <text x="120" y="372" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">请求合并</text>
+  <text x="120" y="387" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">POST /merge</text>
+
+  <!-- Arrow 7 -->
+  <line x1="180" y1="375" x2="600" y2="375" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="390" y="368" text-anchor="middle" font-size="10" fill="#e74c3c">⑦ fileMd5 + fileName</text>
+
+  <!-- Step 8: 合并分片 -->
+  <rect x="600" y="355" width="160" height="50" rx="8" fill="#27ae60" filter="url(#shadow)"/>
+  <text x="680" y="375" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">按序号合并分片</text>
+  <text x="680" y="390" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">→ 完整文件</text>
+  <text x="680" y="402" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.7)">清理分片目录</text>
+
+  <!-- Arrow 8: 返回结果 -->
+  <line x1="600" y1="415" x2="180" y2="415" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="390" y="430" text-anchor="middle" font-size="11" fill="#27ae60" font-weight="bold">⑧ 返回文件 URL，上传完成！</text>
+
+  <!-- 底部说明 -->
+  <rect x="40" y="455" width="720" height="55" rx="10" fill="#f8f9fa" stroke="#eee"/>
+  <text x="400" y="475" text-anchor="middle" font-size="11" fill="#555">断点续传核心：前端记住文件 MD5，后端记住已传分片。断开重连后只传缺失部分。</text>
+  <text x="400" y="495" text-anchor="middle" font-size="11" fill="#555">秒传核心：文件 MD5 已存在 → 跳过上传，直接返回成功。</text>
+</svg>

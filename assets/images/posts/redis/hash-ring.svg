@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e67e22"/>
+    </marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <text x="400" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">Hash 环工作原理</text>
+  <text x="400" y="58" text-anchor="middle" font-size="13" fill="#888">顺时针找最近的节点，就是数据的归属机器</text>
+
+  <!-- Hash Ring -->
+  <circle cx="400" cy="270" r="170" fill="none" stroke="#e0e0e0" stroke-width="6"/>
+  <circle cx="400" cy="270" r="170" fill="none" stroke="#3498db" stroke-width="4" stroke-dasharray="12,6"/>
+
+  <!-- Ring direction arrow -->
+  <path d="M 570 270 A 170 170 0 0 0 400 100" fill="none" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="520" y="160" text-anchor="middle" font-size="11" fill="#e67e22" font-weight="bold">顺时针方向</text>
+
+  <!-- Node A at top (0x3A2F) -->
+  <g filter="url(#shadow)">
+    <circle cx="400" cy="100" r="28" fill="#2ecc71"/>
+    <text x="400" y="105" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">A</text>
+  </g>
+  <text x="400" y="72" text-anchor="middle" font-size="11" fill="#2ecc71" font-weight="bold">机器 A</text>
+  <text x="400" y="58" text-anchor="middle" font-size="10" fill="#999">0x3A2F</text>
+
+  <!-- Node B at right (0x7B1C) -->
+  <g filter="url(#shadow)">
+    <circle cx="570" cy="270" r="28" fill="#3498db"/>
+    <text x="570" y="275" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">B</text>
+  </g>
+  <text x="610" y="260" text-anchor="start" font-size="11" fill="#3498db" font-weight="bold">机器 B</text>
+  <text x="610" y="275" text-anchor="start" font-size="10" fill="#999">0x7B1C</text>
+
+  <!-- Node C at bottom-left (0xB04E) -->
+  <g filter="url(#shadow)">
+    <circle cx="280" cy="380" r="28" fill="#9b59b6"/>
+    <text x="280" y="385" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">C</text>
+  </g>
+  <text x="240" y="410" text-anchor="end" font-size="11" fill="#9b59b6" font-weight="bold">机器 C</text>
+  <text x="240" y="425" text-anchor="end" font-size="10" fill="#999">0xB04E</text>
+
+  <!-- Data key1 at 0x5000 → goes to B -->
+  <circle cx="510" cy="140" r="18" fill="#f39c12" opacity="0.9"/>
+  <text x="510" y="144" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">K1</text>
+  <text x="540" y="125" text-anchor="start" font-size="10" fill="#666">user:100</text>
+  <text x="540" y="138" text-anchor="start" font-size="10" fill="#666">hash=0x5000</text>
+  <!-- Arrow from K1 to B -->
+  <line x1="520" y1="155" x2="548" y2="250" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Data key2 at 0x9000 → goes to C -->
+  <circle cx="340" cy="410" r="18" fill="#e74c3c" opacity="0.9"/>
+  <text x="340" y="414" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">K2</text>
+  <text x="300" y="445" text-anchor="end" font-size="10" fill="#666">order:200</text>
+  <text x="300" y="458" text-anchor="end" font-size="10" fill="#666">hash=0x9000</text>
+  <!-- Arrow from K2 to C -->
+  <line x1="325" y1="400" x2="300" y2="388" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Data key3 at 0xC000 → wraps to A -->
+  <circle cx="310" cy="170" r="18" fill="#1abc9c" opacity="0.9"/>
+  <text x="310" y="174" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">K3</text>
+  <text x="270" y="160" text-anchor="end" font-size="10" fill="#666">product:300</text>
+  <text x="270" y="173" text-anchor="end" font-size="10" fill="#666">hash=0xC000</text>
+  <!-- Arrow from K3 wrapping to A -->
+  <path d="M 310 155 Q 350 120 380 108" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Legend -->
+  <rect x="30" y="440" width="740" height="50" rx="10" fill="#f8f9fa" stroke="#eee"/>
+  <circle cx="60" cy="465" r="10" fill="#f39c12"/>
+  <text x="80" y="469" font-size="11" fill="#555">K1 (0x5000) → 顺时针 → 机器 B</text>
+  <circle cx="280" cy="465" r="10" fill="#e74c3c"/>
+  <text x="300" y="469" font-size="11" fill="#555">K2 (0x9000) → 顺时针 → 机器 C</text>
+  <circle cx="510" cy="465" r="10" fill="#1abc9c"/>
+  <text x="530" y="469" font-size="11" fill="#555">K3 (0xC000) → 绕回 → 机器 A</text>
+</svg>
